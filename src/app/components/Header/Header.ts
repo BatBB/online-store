@@ -1,12 +1,13 @@
 import Component from '../Component';
+import './header.scss';
 
 const pages = [
     {
-        name: 'mainPage',
+        name: 'Main page',
         id: 'main-page',
     },
     {
-        name: 'basketPage',
+        name: 'Basket',
         id: 'basket-page',
     },
 ];

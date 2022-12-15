@@ -1,4 +1,5 @@
 import Header from './components/Header/Header';
+import '../global.scss';
 
 class App {
     private container: HTMLElement;
