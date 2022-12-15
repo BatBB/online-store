@@ -1,12 +1,15 @@
+import Header from './components/Header/Header';
+
 class App {
     private container: HTMLElement;
+    header = new Header('header', 'header');
 
     constructor() {
         this.container = document.body;
     }
 
     run() {
-        this.container.textContent = 'Online store';
+        this.container.append(this.header.render());
     }
 }
 
