@@ -1,4 +1,5 @@
 import Component from '../Component';
+import './footer.scss';
 
 const ghAccounts = [
     {

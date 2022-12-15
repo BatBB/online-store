@@ -1,0 +1,14 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    flex-shrink: 0;
+
+    &__gh-list {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 15px;
+    }
+}
