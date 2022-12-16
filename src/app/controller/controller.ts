@@ -1,4 +1,4 @@
-type itemProduct = {
+export type itemProduct = {
     brand: string;
     category: string;
     description: string;
@@ -12,12 +12,17 @@ type itemProduct = {
     title: string;
 }[];
 
+type productsJson = {
+    products: itemProduct;
+    total: number;
+    skip: number;
+    limit: number;
+};
+
 export async function getData(): Promise<itemProduct> {
-    const data = await fetch('https://dummyjson.com/products');
-    const dataJSON = await data.json();
+    const data: Response = await fetch('https://dummyjson.com/products?limit=10');
+    const dataJSON: productsJson = await (<Promise<productsJson>>data.json());
     const dataArray: itemProduct = Array.from(dataJSON.products);
 
     return dataArray;
 }
-
-

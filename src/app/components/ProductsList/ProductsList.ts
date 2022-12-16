@@ -7,7 +7,6 @@ class ProductsList extends Component {
         super(tagName, className);
     }
 
-
     async renderProduct(): Promise<void> {
         const productsData = await getData();
         const products: Product[] = [];
@@ -24,14 +23,15 @@ class ProductsList extends Component {
                     productsData[i].brand,
                     productsData[i].rating,
                     productsData[i].discountPercentage,
-                    productsData[i].stock)
+                    productsData[i].stock
+                )
             );
             this.container.append(products[i].render());
         }
     }
 
     render() {
-        this.renderProduct();
+        void this.renderProduct();
         return this.container;
     }
 }
