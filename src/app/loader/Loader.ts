@@ -1,13 +1,15 @@
-import IProduct from '../components/interfaces/IProduct';
 import IProductsData from '../components/interfaces/IProductsData';
 
 class Loader {
     // eslint-disable-next-line no-unused-vars
-    fetchData(callback: (data: IProduct[]) => void) {
-        fetch('https://dummyjson.com/products?limit=100')
-            .then((res) => res.json())
-            .then((data: IProductsData) => callback(data.products))
-            .catch((err: Error) => console.error(err));
+    async fetchData() {
+        try {
+            const data = await fetch('https://dummyjson.com/products?limit=10');
+            const dataJSON = await (<Promise<IProductsData>>data.json());
+            return dataJSON.products;
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 
