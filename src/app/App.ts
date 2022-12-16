@@ -2,15 +2,14 @@ import Header from './components/Header/Header';
 import '../global.scss';
 import Footer from './components/Footer/Footer';
 import MainPage from './components/MainPage/MainPage';
-import Loader from './loader/Loader';
+import ProductPage from './components/ProductPage/ProductPage';
 
 class App {
     private container: HTMLElement;
     header = new Header('header', 'header');
-    main = new MainPage('main', 'main');
+    mainPage = new MainPage('main', 'main');
+    productPage = new ProductPage('main', 'product-page');
     footer = new Footer('footer', 'footer');
-
-    loader = new Loader();
 
     constructor() {
         this.container = document.body;
@@ -18,7 +17,7 @@ class App {
 
     run() {
         this.container.append(this.header.render());
-        this.container.append(this.main.render());
+        this.container.append(this.productPage.render());
         this.container.append(this.footer.render());
     }
 }

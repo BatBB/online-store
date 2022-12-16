@@ -1,0 +1,36 @@
+.product {
+    &-page {
+        display: flex;
+    }
+
+    &-image {
+        &-container {
+            display: flex;
+        }
+
+        &-swiper {
+            height: 30px;
+            width: 30px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        &-main {
+            height: 300px;
+            width: 300px;
+            margin: 5px;
+        }
+    }
+
+    &-count {
+        &-container {
+            display: flex;
+            column-gap: 5px;
+        }
+    }
+}
+
+.image {
+    height: 100%;
+    width: 100%;
+}
