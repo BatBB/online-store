@@ -1,23 +1,29 @@
+import Loader from '../../loader/Loader';
 import Component from '../Component';
 import Product from '../Product/Product';
+import IProduct from './../interfaces/IProduct';
+import './productsList.scss';
 
 class ProductsList extends Component {
     constructor(tagName: string, className: string) {
         super(tagName, className);
     }
 
-    renderProduct(): void {
-        const products: Product[] = [];
-        for (let i = 0; i < 10; i++) {
-            products.push(new Product('div', 'product-item', `Product ${i}`, `id${i}`));
-            console.log(products[i]);
+    async renderProducts() {
+        const loader = new Loader();
+        const products = await loader.fetchData();
 
-            this.container.append(products[i].render());
+        if (products) {
+            products.forEach((product: IProduct) => {
+                const productItem = new Product('div', 'product-item');
+                productItem.renderProduct(product);
+                this.container.append(productItem.render());
+            });
         }
     }
 
     render() {
-        this.renderProduct();
+        void this.renderProducts();
         return this.container;
     }
 }
