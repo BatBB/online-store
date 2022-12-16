@@ -12,7 +12,7 @@ type itemProduct = {
     title: string;
 }[];
 
-export async function getData(): Promise<any> {
+export async function getData(): Promise<itemProduct> {
     const data = await fetch('https://dummyjson.com/products');
     const dataJSON = await data.json();
     const dataArray: itemProduct = Array.from(dataJSON.products);

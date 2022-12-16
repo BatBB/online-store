@@ -1,3 +1,4 @@
+import { getData } from '../../controller/controller';
 import Component from '../Component';
 import Product from '../Product/Product';
 
@@ -6,12 +7,25 @@ class ProductsList extends Component {
         super(tagName, className);
     }
 
-    renderProduct(): void {
-        const products: Product[] = [];
-        for (let i = 0; i < 10; i++) {
-            products.push(new Product('div', 'product-item', `Product ${i}`, `id${i}`));
-            console.log(products[i]);
 
+    async renderProduct(): Promise<void> {
+        const productsData = await getData();
+        const products: Product[] = [];
+        for (let i = 0; i < productsData.length; i++) {
+            products.push(
+                new Product(
+                    'div',
+                    'product-item',
+                    productsData[i].title,
+                    productsData[i].id,
+                    productsData[i].category,
+                    productsData[i].price,
+                    productsData[i].description,
+                    productsData[i].brand,
+                    productsData[i].rating,
+                    productsData[i].discountPercentage,
+                    productsData[i].stock)
+            );
             this.container.append(products[i].render());
         }
     }
