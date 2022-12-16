@@ -1,5 +1,6 @@
 import Component from '../Component';
 import IProduct from '../interfaces/IProduct';
+import './product.scss';
 
 class Product extends Component {
     constructor(tagName: string, className: string) {
@@ -7,18 +8,15 @@ class Product extends Component {
     }
 
     renderProduct(product: IProduct) {
-        const productItem = document.createElement('div');
-        productItem.className = 'product-item';
-        productItem.innerHTML = `
-        <div class="product-title">${product.title}</div>
-        <div class="product-brand">${product.brand}</div>
-        <div class="product-price">${product.price}</div>
-        <div class="product-discount">${product.discountPercentage}</div>
-        <div class="product-rating">${product.rating}</div>
-        <div class="product-stock">${product.stock}</div>
-        <div class="product-category">${product.category}</div>
+        this.container.innerHTML = `
+        <div class="product-title">Title: ${product.title}</div>
+        <div class="product-brand">Brand: ${product.brand}</div>
+        <div class="product-price">Price: ${product.price}</div>
+        <div class="product-discount">Discount: ${product.discountPercentage}</div>
+        <div class="product-rating">Rating: ${product.rating}</div>
+        <div class="product-stock">Stock: ${product.stock}</div>
+        <div class="product-category">Category: ${product.category}</div>
         `;
-        this.container.append(productItem);
     }
 
     render() {
