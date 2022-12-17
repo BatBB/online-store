@@ -9,15 +9,18 @@
         }
 
         &-swiper {
-            height: 30px;
-            width: 30px;
+            height: 100%;
+            width: 40px;
             margin: 5px;
+            row-gap: 10px;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
         }
 
         &-main {
-            height: 300px;
-            width: 300px;
+            max-height: 300px;
+            max-width: 300px;
             margin: 5px;
         }
     }
@@ -31,6 +34,7 @@
 }
 
 .image {
-    height: 100%;
+    display: block;
+    max-height: 100%;
     width: 100%;
 }

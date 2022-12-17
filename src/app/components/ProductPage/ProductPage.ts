@@ -39,6 +39,7 @@ class ProductPage extends Component {
         productImagesContainer.append(productImageMain);
 
         this.container.append(productImagesContainer);
+        // return productImagesContainer;
     }
 
     renderProductDesc(productData: IProduct) {
@@ -89,33 +90,16 @@ class ProductPage extends Component {
         productContainer.append(productDesc);
 
         this.container.append(productContainer);
+        // return productContainer;
     }
 
     renderProductPage(productData: IProduct) {
         this.renderProductImages(productData.images, productData.title);
         this.renderProductDesc(productData);
+        return this.container;
     }
 
     render() {
-        this.renderProductPage({
-            id: 25,
-            title: 'Gulab Powder 50 Gram',
-            description: 'Dry Rose Flower Powder Gulab Powder 50 Gram • Treats Wounds',
-            price: 70,
-            discountPercentage: 13.58,
-            rating: 4.87,
-            stock: 47,
-            brand: 'Dry Rose',
-            category: 'groceries',
-            thumbnail: 'https://i.dummyjson.com/data/products/25/thumbnail.jpg',
-            images: [
-                'https://i.dummyjson.com/data/products/25/1.png',
-                'https://i.dummyjson.com/data/products/25/2.jpg',
-                'https://i.dummyjson.com/data/products/25/3.png',
-                'https://i.dummyjson.com/data/products/25/4.jpg',
-                'https://i.dummyjson.com/data/products/25/thumbnail.jpg',
-            ],
-        });
         return this.container;
     }
 }

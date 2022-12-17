@@ -6,10 +6,19 @@ import ProductPage from './components/ProductPage/ProductPage';
 
 class App {
     private container: HTMLElement;
-    header = new Header('header', 'header');
-    mainPage = new MainPage('main', 'main');
-    productPage = new ProductPage('main', 'product-page');
-    footer = new Footer('footer', 'footer');
+    private header = new Header('header', 'header');
+    private mainPage = new MainPage('main', 'main');
+    private productPage = new ProductPage('main', 'main');
+    private footer = new Footer('footer', 'footer');
+
+    static renderPage(page: HTMLElement) {
+        const currentPage = document.querySelector('main');
+        if (currentPage) {
+            console.log(page);
+            currentPage.innerHTML = '';
+            currentPage.append(page);
+        }
+    }
 
     constructor() {
         this.container = document.body;
