@@ -25,7 +25,7 @@ class ProductsList extends Component {
     }
 
     render() {
-        this.renderProducts();
+        void this.renderProducts();
         return this.container;
     }
 }

@@ -19,15 +19,14 @@ class App {
         const filterContainer = document.querySelector('.filter_list');
 
         filterContainer?.addEventListener('change', (e: Event) => {
-            const target: any = e.target;
+            const target = e.target as HTMLInputElement;
             if (target.checked) {
                 checkedCategory.push(target.id);
             } else if (!target.checked) {
-                checkedCategory = checkedCategory.filter((category) => category !== target.id)
+                checkedCategory = checkedCategory.filter((category) => category !== target.id);
             }
             this.main.render();
         });
-        
         return checkedCategory;
     }
 
@@ -35,9 +34,7 @@ class App {
         this.container.append(this.header.render());
         this.container.append(this.main.render());
         this.container.append(this.footer.render());
-
         this.listenerAside();
-
     }
 }
 

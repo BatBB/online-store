@@ -12,7 +12,7 @@ class ProductsList extends Component {
     async renderProducts() {
         const loader = new Loader();
         let products = await loader.fetchData();
-        if(checkedCategory.length !== 0) {
+        if (checkedCategory.length !== 0) {
             products = products?.filter((item) => checkedCategory.includes(item.category));
         } else {
             products = await loader.fetchData();
