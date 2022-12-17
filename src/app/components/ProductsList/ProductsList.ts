@@ -20,10 +20,12 @@ class ProductsList extends Component {
                 this.container.append(productItem.render());
             });
         }
+
+        return products;
     }
 
     render() {
-        void this.renderProducts();
+        this.renderProducts();
         return this.container;
     }
 }

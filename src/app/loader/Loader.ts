@@ -4,7 +4,7 @@ class Loader {
     // eslint-disable-next-line no-unused-vars
     async fetchData() {
         try {
-            const data = await fetch('https://dummyjson.com/products?limit=10');
+            const data = await fetch('https://dummyjson.com/products?limit=30');
             const dataJSON = await (<Promise<IProductsData>>data.json());
             return dataJSON.products;
         } catch (error) {

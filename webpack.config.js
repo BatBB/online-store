@@ -11,9 +11,12 @@ const stylesHandler = isProduction
   : "style-loader";
 
 const config = {
+  devtool: 'eval-source-map',
   entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
+    filename: "[name].js",
+    sourceMapFilename: "[name].js.map"
   },
   devServer: {
     open: true,
