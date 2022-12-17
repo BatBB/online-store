@@ -17,7 +17,7 @@ class App {
 
     run() {
         this.container.append(this.header.render());
-        this.container.append(this.productPage.render());
+        this.container.append(this.mainPage.render());
         this.container.append(this.footer.render());
     }
 }

@@ -17,7 +17,11 @@ class ProductsList extends Component {
             products.forEach((product: IProduct) => {
                 const productItem = new Product('div', 'product-item');
                 productItem.renderProduct(product);
-                this.container.append(productItem.render());
+                const productElement = productItem.render();
+                productElement.addEventListener('click', () => {
+                    console.log('click');
+                });
+                this.container.append(productElement);
             });
         }
     }
