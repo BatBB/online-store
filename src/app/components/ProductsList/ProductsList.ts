@@ -27,6 +27,8 @@ class ProductsList extends Component {
                 this.container.append(productElement);
             });
         }
+
+        return products;
     }
 
     render() {
