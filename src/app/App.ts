@@ -8,10 +8,11 @@ import ProductPage from './components/ProductPage/ProductPage';
 class App {
     private container: HTMLElement;
     private header = new Header('header', 'header');
-    private mainPage = new MainPage('main', 'main');
+    // private mainPage = ;
     private productPage = new ProductPage('main', 'main');
     private footer = new Footer('footer', 'footer');
-    
+    static mainPage = new MainPage('main', 'main');
+
     static renderPage(page: HTMLElement) {
         const currentPage = document.querySelector('main');
         if (currentPage) {
@@ -20,31 +21,31 @@ class App {
             currentPage.append(page);
         }
     }
-    
     constructor() {
         this.container = document.body;
     }
 
-    listenerAside() {
+    static listenerAside() {
         const filterContainer = document.querySelector('.filter_list');
 
         filterContainer?.addEventListener('change', (e: Event) => {
+            console.log(true);
             const target = e.target as HTMLInputElement;
             if (target.checked) {
                 checkedCategory.push(target.id);
             } else if (!target.checked) {
                 checkedCategory = checkedCategory.filter((category) => category !== target.id);
             }
-            this.main.render();
+            App.mainPage.render();
         });
         return checkedCategory;
     }
 
     run() {
         this.container.append(this.header.render());
-        this.container.append(this.mainPage.render());
+        this.container.append(App.mainPage.render());
         this.container.append(this.footer.render());
-        this.listenerAside();
+        App.listenerAside();
     }
 }
 
