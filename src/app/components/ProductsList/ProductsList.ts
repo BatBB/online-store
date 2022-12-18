@@ -1,8 +1,10 @@
+import App from '../../App';
 import Loader from '../../loader/Loader';
 import Component from '../Component';
 import Product from '../Product/Product';
-import IProduct from './../interfaces/IProduct';
+import IProduct from '../interfaces/IProduct';
 import './productsList.scss';
+import ProductPage from '../ProductPage/ProductPage';
 
 class ProductsList extends Component {
     constructor(tagName: string, className: string) {
@@ -12,12 +14,17 @@ class ProductsList extends Component {
     async renderProducts() {
         const loader = new Loader();
         const products = await loader.fetchData();
+        const productPage = new ProductPage('section', 'product-page');
 
         if (products) {
             products.forEach((product: IProduct) => {
                 const productItem = new Product('div', 'product-item');
                 productItem.renderProduct(product);
-                this.container.append(productItem.render());
+                const productElement = productItem.render();
+                productElement.addEventListener('click', () => {
+                    App.renderPage(productPage.renderProductPage(product));
+                });
+                this.container.append(productElement);
             });
         }
 

@@ -20,8 +20,6 @@ class Product extends Component {
     }
 
     render() {
-        // this.container.textContent = this.productName;
-        // this.container.id = this.productId;
         return this.container;
     }
 }
