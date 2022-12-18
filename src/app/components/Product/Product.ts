@@ -17,11 +17,14 @@ class Product extends Component {
         <div class="product-stock">Stock: ${product.stock}</div>
         <div class="product-category">Category: ${product.category}</div>
         `;
+
+        this.container.addEventListener('click', () => {
+            console.log('click product');
+            window.location.hash = `/products/${product.category}/${product.brand}/${product.title}`;
+        });
     }
 
     render() {
-        // this.container.textContent = this.productName;
-        // this.container.id = this.productId;
         return this.container;
     }
 }
