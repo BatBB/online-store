@@ -1,3 +1,4 @@
+import Route from '../../routes/routes';
 import Component from '../Component';
 import './header.scss';
 
@@ -5,10 +6,12 @@ const pages = [
     {
         name: 'Main page',
         id: 'main-page',
+        path: '/',
     },
     {
-        name: 'Basket',
-        id: 'basket-page',
+        name: 'Cart',
+        id: 'cart-page',
+        path: '/cart',
     },
 ];
 
@@ -25,6 +28,7 @@ class Header extends Component {
     }
 
     renderNav() {
+        const route = new Route();
         const navList = document.createElement('ul');
         navList.className = 'header__nav-list';
 
@@ -34,7 +38,14 @@ class Header extends Component {
 
             const navLink = document.createElement('a');
             navLink.className = 'header__nav-link';
+            navLink.href = page.path;
             navLink.textContent = page.name;
+
+            navLink.addEventListener('click', (event: Event) => {
+                event.preventDefault();
+                window.location.hash = page.path;
+                void route.router(page.path);
+            });
 
             navItem.append(navLink);
             navList.append(navItem);

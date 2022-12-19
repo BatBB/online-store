@@ -1,5 +1,5 @@
-import Component from '../Component';
-import ProductsList from '../ProductsList/ProductsList';
+import Component from '../../components/Component';
+import ProductsList from '../../components/ProductsList/ProductsList';
 
 class MainPage extends Component {
     private productsList = new ProductsList('div', 'products-list');

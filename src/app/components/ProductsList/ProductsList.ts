@@ -10,8 +10,7 @@ class ProductsList extends Component {
     }
 
     async renderProducts() {
-        const loader = new Loader();
-        const products = await loader.fetchData();
+        const products = await Loader.fetchData();
 
         if (products) {
             products.forEach((product: IProduct) => {
