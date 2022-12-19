@@ -1,0 +1,40 @@
+.product {
+    &-page {
+        display: flex;
+    }
+
+    &-image {
+        &-container {
+            display: flex;
+        }
+
+        &-swiper {
+            height: 100%;
+            width: 40px;
+            margin: 5px;
+            row-gap: 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-main {
+            max-height: 300px;
+            max-width: 300px;
+            margin: 5px;
+        }
+    }
+
+    &-count {
+        &-container {
+            display: flex;
+            column-gap: 5px;
+        }
+    }
+}
+
+.image {
+    display: block;
+    max-height: 100%;
+    width: 100%;
+}

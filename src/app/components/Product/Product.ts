@@ -7,20 +7,22 @@ class Product extends Component {
         super(tagName, className);
     }
 
-    renderProduct(product: IProduct) {
+    renderProduct(productData: IProduct) {
         this.container.innerHTML = `
-        <div class="product-title">Title: ${product.title}</div>
-        <div class="product-brand">Brand: ${product.brand}</div>
-        <div class="product-price">Price: ${product.price}</div>
-        <div class="product-discount">Discount: ${product.discountPercentage}</div>
-        <div class="product-rating">Rating: ${product.rating}</div>
-        <div class="product-stock">Stock: ${product.stock}</div>
-        <div class="product-category">Category: ${product.category}</div>
+        <div class="product-title">Title: ${productData.title}</div>
+        <div class="product-brand">Brand: ${productData.brand}</div>
+        <div class="product-price">Price: ${productData.price}</div>
+        <div class="product-discount">Discount: ${productData.discountPercentage}</div>
+        <div class="product-rating">Rating: ${productData.rating}</div>
+        <div class="product-stock">Stock: ${productData.stock}</div>
+        <div class="product-category">Category: ${productData.category}</div>
         `;
 
         this.container.addEventListener('click', () => {
-            console.log('click product');
-            window.location.hash = `/products/${product.category}/${product.brand}/${product.title}`;
+            console.log('click product, save productData');
+            localStorage.setItem('productDataInLocalStorage', JSON.stringify(productData));
+            // window.location.hash = `/products/`;
+            window.location.hash = `/products/${productData.category}/${productData.brand}/${productData.title}`;
         });
     }
 

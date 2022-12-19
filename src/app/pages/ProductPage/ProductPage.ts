@@ -1,6 +1,6 @@
 import Component from '../../components/Component';
 import IProduct from '../../components/interfaces/IProduct';
-// import './productPage.scss';
+import './productPage.scss';
 
 class ProductPage extends Component {
     constructor(tagName: string, className: string) {
@@ -39,7 +39,6 @@ class ProductPage extends Component {
         productImagesContainer.append(productImageMain);
 
         this.container.append(productImagesContainer);
-        // return productImagesContainer;
     }
 
     renderProductDesc(productData: IProduct) {
@@ -93,9 +92,23 @@ class ProductPage extends Component {
         // return productContainer;
     }
 
-    renderProductPage(productData: IProduct) {
-        this.renderProductImages(productData.images, productData.title);
-        this.renderProductDesc(productData);
+    renderProductPage(productData?: IProduct) {
+        console.log('productData', productData);
+
+        if (productData) {
+            this.renderProductImages(productData.images, productData.title);
+            this.renderProductDesc(productData);
+        } else {
+            let productDataFromLocalStorage: IProduct;
+            const dataTemp = localStorage.getItem('productDataInLocalStorage');
+            if (dataTemp) {
+                console.log('click product, clear productDataInLocalStorage');
+                localStorage.removeItem('productDataInLocalStorage');
+                productDataFromLocalStorage = <IProduct>JSON.parse(dataTemp);
+                this.renderProductImages(productDataFromLocalStorage.images, productDataFromLocalStorage.title);
+                this.renderProductDesc(productDataFromLocalStorage);
+            }
+        }
         return this.container;
     }
 
