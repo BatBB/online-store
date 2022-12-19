@@ -1,27 +1,34 @@
-// import App from '../App';
 import App from '../App';
-// import IProduct from '../components/interfaces/IProduct';
-import ProductPage from '../pages/ProductPage/ProductPage';
+import Loader from '../loader/Loader';
 
 class Route {
-    static routes = {
-        '/': 'mainPage',
-        '/cart': 'cartPage',
-        '/products': 'productsPage',
-    };
-
-    private productPage = new ProductPage('div', 'product-page');
-
-    router(href: string) {
-        console.log('href', href);
-
+    async router(href: string) {
         if (href === '/' || href === '') {
             App.renderCurrentPage('main-page');
-        } else if (href.includes('/products/')) {
-            App.renderCurrentPage('product-page');
-        } else {
-            const mainId = document.getElementById('main');
+        } else if (href.includes('/product/') && href !== '/product/') {
+            const idProduct = href.slice(9);
 
+            const products = await Loader.fetchData();
+            const countProducts = products ? products.length : 0;
+            const productData = products?.find((prod) => prod.id === Number(idProduct));
+
+            if (Number(idProduct) && Number(idProduct) <= countProducts) {
+                localStorage.setItem('productDataInLocalStorage', JSON.stringify(productData));
+                App.renderCurrentPage('product-page');
+            } else {
+                const mainId = document.getElementById('main');
+                if (mainId) mainId.innerHTML = '';
+                if (mainId) mainId.innerHTML = 'error 404';
+            }
+        } else if (href === '/cart') {
+            // App.renderCurrentPage('cart-page');
+            const mainId = document.getElementById('main');
+            if (mainId) mainId.innerHTML = '';
+            if (mainId) mainId.innerHTML = 'CART PAGE';
+        } else {
+            // App.renderCurrentPage('error-page');
+
+            const mainId = document.getElementById('main');
             if (mainId) mainId.innerHTML = '';
             if (mainId) mainId.innerHTML = 'error 404';
         }
@@ -29,23 +36,13 @@ class Route {
 
     eventDOMContentLoaded() {
         window.addEventListener('DOMContentLoaded', () => {
-            console.log('load --------------------------');
-            this.router(window.location.hash.slice(1));
+            void this.router(window.location.hash.slice(1));
         });
     }
 
     eventHashChange() {
         window.addEventListener('hashchange', () => {
-            console.log('____________eventHashChange');
-            // let product: IProduct;
-            // const productObjInLocalStorage: string | null = localStorage.getItem('productObjInLocalStorage');
-            // if (productObjInLocalStorage) {
-            //     product = <IProduct>JSON.parse(productObjInLocalStorage);
-            //     localStorage.removeItem('productObjInLocalStorage');
-            //     this.router(window.location.hash.slice(1));
-            // } else {
-            // }
-            this.router(window.location.hash.slice(1));
+            void this.router(window.location.hash.slice(1));
         });
     }
 }

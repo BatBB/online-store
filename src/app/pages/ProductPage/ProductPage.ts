@@ -7,13 +7,13 @@ class ProductPage extends Component {
         super(tagName, className);
     }
 
-    createElement = (tagName: string, className: string) => {
+    private createElement = (tagName: string, className: string) => {
         const element = document.createElement(tagName);
         element.className = className;
         return element;
     };
 
-    renderProductImages(images: string[], title: string) {
+    private renderProductImages(images: string[], title: string) {
         const productImagesContainer = this.createElement('div', 'product-image-container');
 
         const productImageMain = this.createElement('div', 'product-image-main');
@@ -41,7 +41,7 @@ class ProductPage extends Component {
         this.container.append(productImagesContainer);
     }
 
-    renderProductDesc(productData: IProduct) {
+    private renderProductDesc(productData: IProduct) {
         const productContainer = this.createElement('div', 'product-desc-container');
 
         const productName = this.createElement('p', 'product-name');
@@ -93,18 +93,17 @@ class ProductPage extends Component {
     }
 
     renderProductPage(productData?: IProduct) {
-        console.log('productData', productData);
-
         if (productData) {
             this.renderProductImages(productData.images, productData.title);
             this.renderProductDesc(productData);
         } else {
             let productDataFromLocalStorage: IProduct;
             const dataTemp = localStorage.getItem('productDataInLocalStorage');
+
             if (dataTemp) {
-                console.log('click product, clear productDataInLocalStorage');
                 localStorage.removeItem('productDataInLocalStorage');
                 productDataFromLocalStorage = <IProduct>JSON.parse(dataTemp);
+
                 this.renderProductImages(productDataFromLocalStorage.images, productDataFromLocalStorage.title);
                 this.renderProductDesc(productDataFromLocalStorage);
             }

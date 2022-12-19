@@ -43,9 +43,8 @@ class Header extends Component {
 
             navLink.addEventListener('click', (event: Event) => {
                 event.preventDefault();
-                console.log(page.path);
                 window.location.hash = page.path;
-                route.router(page.path);
+                void route.router(page.path);
             });
 
             navItem.append(navLink);

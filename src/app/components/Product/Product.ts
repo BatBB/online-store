@@ -19,10 +19,8 @@ class Product extends Component {
         `;
 
         this.container.addEventListener('click', () => {
-            console.log('click product, save productData');
             localStorage.setItem('productDataInLocalStorage', JSON.stringify(productData));
-            // window.location.hash = `/products/`;
-            window.location.hash = `/products/${productData.category}/${productData.brand}/${productData.title}`;
+            window.location.hash = `/product/${productData.id}`;
         });
     }
 
