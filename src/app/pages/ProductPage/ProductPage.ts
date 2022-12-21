@@ -1,5 +1,6 @@
 import Component from '../../components/Component';
 import IProduct from '../../components/interfaces/IProduct';
+import createElement from '../../libs/createElement';
 import './productPage.scss';
 
 class ProductPage extends Component {
@@ -7,23 +8,17 @@ class ProductPage extends Component {
         super(tagName, className);
     }
 
-    private createElement = (tagName: string, className: string) => {
-        const element = document.createElement(tagName);
-        element.className = className;
-        return element;
-    };
-
     private renderProductImages(images: string[], title: string) {
-        const productImagesContainer = this.createElement('div', 'product-image-container');
+        const productImagesContainer = createElement('div', 'product-image-container');
 
-        const productImageMain = this.createElement('div', 'product-image-main');
+        const productImageMain = createElement('div', 'product-image-main');
         const imageMain = document.createElement('img');
         imageMain.className = 'image';
         imageMain.src = images[0];
         imageMain.alt = `Photo ${title}`;
         productImageMain.append(imageMain);
 
-        const productImageSwiper = this.createElement('div', 'product-image-swiper');
+        const productImageSwiper = createElement('div', 'product-image-swiper');
         images.forEach((img) => {
             const imageSwiper = document.createElement('img');
             imageSwiper.className = 'image';
@@ -42,30 +37,30 @@ class ProductPage extends Component {
     }
 
     private renderProductDesc(productData: IProduct) {
-        const productContainer = this.createElement('div', 'product-desc-container');
+        const productContainer = createElement('div', 'product-desc-container');
 
-        const productName = this.createElement('p', 'product-name');
+        const productName = createElement('p', 'product-name');
         productName.textContent = `${productData.brand} ${productData.title}`;
         productContainer.append(productName);
 
-        const productRating = this.createElement('p', 'product-rating');
+        const productRating = createElement('p', 'product-rating');
         productRating.textContent = `Rating: ${productData.rating} out of 5`;
         productContainer.append(productRating);
 
-        const productPrice = this.createElement('p', 'product-price');
+        const productPrice = createElement('p', 'product-price');
         productPrice.textContent = `${productData.price} $`;
         productContainer.append(productPrice);
 
-        const productStock = this.createElement('p', 'product-stock');
+        const productStock = createElement('p', 'product-stock');
         productStock.textContent = `${productData.stock}`;
         productContainer.append(productStock);
 
-        const countContainer = this.createElement('div', 'product-count-container');
-        const btnDecrease = this.createElement('button', 'btn');
+        const countContainer = createElement('div', 'product-count-container');
+        const btnDecrease = createElement('button', 'btn');
         btnDecrease.textContent = '-';
-        const productCount = this.createElement('p', 'product-count');
+        const productCount = createElement('p', 'product-count');
         productCount.textContent = '' || '1';
-        const btnIncrement = this.createElement('button', 'btn');
+        const btnIncrement = createElement('button', 'btn');
         btnIncrement.textContent = '+';
         btnDecrease.addEventListener('click', () => {
             let countProd: number = Number(productCount.textContent);
@@ -84,7 +79,7 @@ class ProductPage extends Component {
         countContainer.append(btnIncrement);
         productContainer.append(countContainer);
 
-        const productDesc = this.createElement('div', 'product-desc');
+        const productDesc = createElement('div', 'product-desc');
         productDesc.textContent = `${productData.description}`;
         productContainer.append(productDesc);
 

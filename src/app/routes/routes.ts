@@ -21,10 +21,7 @@ class Route {
                 if (mainId) mainId.innerHTML = 'error 404';
             }
         } else if (href === '/cart') {
-            // App.renderCurrentPage('cart-page');
-            const mainId = document.getElementById('main');
-            if (mainId) mainId.innerHTML = '';
-            if (mainId) mainId.innerHTML = 'CART PAGE';
+            App.renderCurrentPage('cart-page');
         } else {
             // App.renderCurrentPage('error-page');
 
