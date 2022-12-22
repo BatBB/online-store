@@ -13,8 +13,14 @@ class ProductsList extends Component {
     async renderProducts() {
         const loader = new Loader();
         let products = await loader.fetchData();
-        if (checkedCategory.length !== 0) {
-            products = products?.filter((item) => checkedCategory.includes(item.category));
+        if (checkedCategory.category.length > 0 && checkedCategory.brand.length > 0) {
+            products = products?.filter((item) => {
+                return checkedCategory.category.includes(item.category) && checkedCategory.brand.includes(item.brand);
+            });
+        } else if (checkedCategory.category.length > 0 && checkedCategory.brand.length === 0) {
+            products = products?.filter((item) => checkedCategory.category.includes(item.category));
+        } else if (checkedCategory.brand.length > 0 && checkedCategory.category.length === 0) {
+            products = products?.filter((item) => checkedCategory.brand.includes(item.brand));
         } else {
             products = await loader.fetchData();
         }
