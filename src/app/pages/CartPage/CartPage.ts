@@ -191,7 +191,7 @@ class CartPage extends Component {
     }
 
     private renderOrder() {
-        const orderBlock = createElement('div', 'cart__order');
+        const orderBlock = createElement('div', 'cart__order order');
 
         const orderTitle = createElement('p', 'order__title');
         orderTitle.textContent = 'Order Summary';
@@ -203,12 +203,19 @@ class CartPage extends Component {
         orderPromo.append(inputPromo);
         orderPromo.append(btnPromo);
 
-        const totalBlock = createElement('div', 'order-total');
+        const totalBlock = createElement('div', 'order__total');
         totalBlock.textContent = `Total: ${this.getTotalPrice()}`;
+
+        const btnBuy = createElement('button', 'order__buy-btn');
+        btnBuy.textContent = 'Buy now';
+        btnBuy.addEventListener('click', () => {
+            alert('Good');
+        });
 
         orderBlock.append(orderTitle);
         orderBlock.append(orderPromo);
         orderBlock.append(totalBlock);
+        orderBlock.append(btnBuy);
 
         this.container.append(orderBlock);
     }

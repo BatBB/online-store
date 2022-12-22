@@ -21,3 +21,16 @@
         height: 100%;
     }
 }
+
+.order {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+
+    &__title,
+    &__total {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+}
