@@ -4,6 +4,8 @@ import Footer from './components/Footer/Footer';
 import MainPage from './pages/MainPage/MainPage';
 import Route from './routes/routes';
 import ProductPage from './pages/ProductPage/ProductPage';
+import CartPage from './pages/CartPage/CartPage';
+import createElement from './libs/createElement';
 
 class App {
     private container: HTMLElement;
@@ -13,17 +15,30 @@ class App {
 
     static renderCurrentPage = (page: string) => {
         const mainBlock = document.getElementById('main');
+        let currentPage: HTMLElement;
+        const mainPage = new MainPage('div', 'main-page');
+        const productPage = new ProductPage('div', 'product-page');
+        const cartPage = new CartPage('div', 'cart-page');
         if (mainBlock) {
             mainBlock.innerHTML = '';
-            if (page === 'main-page') {
-                const mainPage = new MainPage('div', 'main-page');
-                mainBlock.append(mainPage.render());
+            switch (page) {
+                case 'main-page':
+                    currentPage = mainPage.render();
+                    break;
+                case 'product-page':
+                    productPage.renderProductPage();
+                    currentPage = productPage.render();
+                    break;
+                case 'cart-page':
+                    currentPage = cartPage.render();
+                    break;
+                default:
+                    //error 404
+                    currentPage = createElement('div', 'error404');
+                    currentPage.textContent = 'Error 404';
+                    break;
             }
-            if (page === 'product-page') {
-                const productPage = new ProductPage('div', 'product-page');
-                productPage.renderProductPage();
-                mainBlock.append(productPage.render());
-            }
+            mainBlock.append(currentPage);
         }
     };
 

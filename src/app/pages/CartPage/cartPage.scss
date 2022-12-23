@@ -1,0 +1,36 @@
+.cart-page {
+    display: flex;
+}
+
+.products {
+    &-list-container {
+        flex: auto;
+    }
+
+    &-item {
+        display: flex;
+        align-items: flex-start;
+        height: 100px;
+        column-gap: 10px;
+        margin: 15px;
+    }
+}
+
+.product {
+    &-image {
+        height: 100%;
+    }
+}
+
+.order {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+
+    &__title,
+    &__total {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+}
