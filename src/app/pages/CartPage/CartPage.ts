@@ -1,5 +1,5 @@
 import Component from '../../components/Component';
-import IProduct from '../../components/interfaces/IProduct';
+import ICartData from '../../components/interfaces/ICartData';
 import createElement from '../../libs/createElement';
 import './cartPage.scss';
 
@@ -130,7 +130,7 @@ class CartPage extends Component {
             return total + totalTemp;
         }, 0);
 
-    private createProductItem(item: { product: IProduct; count: number }) {
+    private createProductItem(item: ICartData) {
         const productImage = <HTMLImageElement>createElement('img', 'product-image');
         productImage.alt = `Photo ${item.product.title}`;
         productImage.src = item.product.thumbnail;

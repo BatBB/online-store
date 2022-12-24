@@ -1,18 +1,27 @@
 .header {
     height: 50px;
-    display: flex;
-    justify-content: space-evenly;
     align-items: center;
+    display: flex;
+    justify-content: space-between;
 
-    &__logo {
+    &__link {
         margin: 0;
-    }
+        cursor: pointer;
 
-    &__nav {
-        &-list {
+        &-cart {
             display: flex;
-            justify-content: space-evenly;
+            align-items: center;
             column-gap: 10px;
+
+            &-img {
+                height: 30px;
+                width: 30px;
+            }
+
+        }
+
+        &-count {
+            width: 25px;
         }
     }
 }
