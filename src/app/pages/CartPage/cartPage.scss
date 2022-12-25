@@ -2,23 +2,30 @@
     display: flex;
 }
 
-.products {
-    &-list-container {
-        flex: auto;
+.cart {
+    &__products {
+        &-list-container {
+            flex: auto;
+        }
+
+        &-item {
+            display: flex;
+            align-items: flex-start;
+            height: 100px;
+            column-gap: 10px;
+            margin: 15px;
+        }
     }
 
-    &-item {
-        display: flex;
-        align-items: flex-start;
-        height: 100px;
-        column-gap: 10px;
-        margin: 15px;
-    }
-}
+    &__product {
+        &-image {
+            height: 100%;
+        }
 
-.product {
-    &-image {
-        height: 100%;
+        &-count-container {
+            display: flex;
+            column-gap: 5px;
+        }
     }
 }
 

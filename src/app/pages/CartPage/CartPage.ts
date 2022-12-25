@@ -131,27 +131,27 @@ class CartPage extends Component {
         }, 0);
 
     private createProductItem(item: ICartData) {
-        const productImage = <HTMLImageElement>createElement('img', 'product-image');
+        const productImage = <HTMLImageElement>createElement('img', 'cart__product-image');
         productImage.alt = `Photo ${item.product.title}`;
         productImage.src = item.product.thumbnail;
 
-        const productName = createElement('p', 'product-name');
+        const productName = createElement('p', 'cart__product-name');
         productName.textContent = `${item.product.brand} ${item.product.title}`;
 
-        const productPrice = createElement('p', 'product-price');
+        const productPrice = createElement('p', 'cart__product-price');
         productPrice.textContent = `${item.product.price} $`;
 
-        const productContainer = createElement('div', 'products-item');
+        const productContainer = createElement('div', 'cart__products-item');
         productContainer.append(productImage);
         productContainer.append(productName);
         productContainer.append(productPrice);
 
-        const countContainer = createElement('div', 'product-count-container');
-        const btnDecrease = createElement('button', 'btn');
+        const countContainer = createElement('div', 'cart__product-count-container');
+        const btnDecrease = createElement('button', 'cart__btn');
         btnDecrease.textContent = '-';
-        const productCount = createElement('p', 'product-count');
+        const productCount = createElement('p', 'cart__product-count');
         productCount.textContent = `${item.count}`;
-        const btnIncrement = createElement('button', 'btn');
+        const btnIncrement = createElement('button', 'cart__btn');
         btnIncrement.textContent = '+';
         btnDecrease.addEventListener('click', () => {
             let countProd: number = Number(productCount.textContent);
@@ -170,7 +170,7 @@ class CartPage extends Component {
         countContainer.append(btnIncrement);
         productContainer.append(countContainer);
 
-        const btnDel = createElement('button', 'btn btn-delete');
+        const btnDel = createElement('button', 'cart__btn cart__btn-delete');
         btnDel.textContent = 'X';
         btnDel.addEventListener('click', (ev: Event) => {
             (<HTMLElement>ev.target).parentElement?.remove();
@@ -182,7 +182,7 @@ class CartPage extends Component {
     }
 
     private renderShop() {
-        const productsListColumn = createElement('div', 'products-list-container');
+        const productsListColumn = createElement('div', 'cart__products-list-container');
         this.productsInCartArr.forEach((item) => {
             const productItem = this.createProductItem(item);
             productsListColumn.append(productItem);

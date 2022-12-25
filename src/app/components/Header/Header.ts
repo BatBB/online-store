@@ -9,131 +9,21 @@ class Header extends Component {
         super(tagName, className);
     }
 
-    private productsInCartArr = [
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 2,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 1,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 1,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 1,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 3,
-        },
-    ];
-
-    private getProductsCount = () => {
+    static updateCountProduct = () => {
         // товары в корзине и их количество будут храниться в localStorage (ключ productsInCart)
-        // localStorage.setItem('productsInCart', JSON.stringify(this.productsInCartArr));
-        console.log(localStorage.getItem('productsInCart'));
+        // console.log(localStorage.getItem('productsInCart'));
 
-        const data = localStorage.getItem('productsInCart');
-        if (data !== null) {
-            const products: ICartData[] = <ICartData[]>JSON.parse(data);
-            return products.reduce((total: number, prod) => prod.count + total, 0);
-        } else {
-            return 0;
+        const countProductsHeader = document.querySelector('.header__link-count');
+
+        const productsInCart = localStorage.getItem('productsInCart');
+
+        let count = 0;
+        if (productsInCart !== null) {
+            const products: ICartData[] = <ICartData[]>JSON.parse(productsInCart);
+            count = products.reduce((total: number, prod) => prod.count + total, 0);
         }
+
+        if (countProductsHeader) countProductsHeader.textContent = count.toString();
     };
 
     private renderHeader() {
@@ -164,16 +54,19 @@ class Header extends Component {
                 </g>
             </svg>
         </div>
-        <div class = "header__link-count">${this.getProductsCount()}</div>`;
+        <span class="header__link-count">000</span>`;
         cartLink.addEventListener('click', (event: Event) => {
             event.preventDefault();
             console.log(window.location.hash);
             window.location.hash = '/cart';
             void route.router('/cart');
         });
+        console.log(document);
 
         this.container.append(logoLink);
         this.container.append(cartLink);
+
+        // console.log(document.querySelector('.header__link-count'));
     }
 
     render() {
