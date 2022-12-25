@@ -1,6 +1,11 @@
 import Component from '../../components/Component';
 import ICartData from '../../components/interfaces/ICartData';
 import createElement from '../../libs/createElement';
+import {
+    setProductInCartLocalStorage,
+    getDataInLocalStorage,
+    delProductInCartLocalStorage,
+} from '../../libs/productInCartLocalStorage';
 import './cartPage.scss';
 
 class CartPage extends Component {
@@ -8,132 +13,34 @@ class CartPage extends Component {
         super(tagName, className);
     }
 
-    private productsInCartArr = [
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 2,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 1,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 1,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 1,
-        },
-        {
-            product: {
-                id: 1,
-                title: 'iPhone 9',
-                description: 'An apple mobile which is nothing like apple',
-                price: 549,
-                discountPercentage: 12.96,
-                rating: 4.69,
-                stock: 94,
-                brand: 'Apple',
-                category: 'smartphones',
-                thumbnail: 'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                images: [
-                    'https://i.dummyjson.com/data/products/1/1.jpg',
-                    'https://i.dummyjson.com/data/products/1/2.jpg',
-                    'https://i.dummyjson.com/data/products/1/3.jpg',
-                    'https://i.dummyjson.com/data/products/1/4.jpg',
-                    'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
-                ],
-            },
-            count: 3,
-        },
-    ];
+    private static totalCountProduct = () => {
+        let total = 0;
+        const data = getDataInLocalStorage();
+        if (data !== null) {
+            total = data.reduce((sum: number, item) => {
+                let sumTemp = 0;
+                for (let i = 0; i < item.count; i++) {
+                    sumTemp += item.product.price;
+                }
+                return sum + sumTemp;
+            }, 0);
+        }
+        return total;
+    };
 
-    getTotalPrice = () =>
-        this.productsInCartArr.reduce((total: number, item) => {
-            let totalTemp = 0;
-            for (let i = 0; i < item.count; i++) {
-                totalTemp += item.product.price;
-            }
-            return total + totalTemp;
-        }, 0);
+    static updateTotalPrice = () => {
+        const totalContainer = document.querySelector('.order__total');
+
+        if (totalContainer) totalContainer.textContent = this.totalCountProduct().toString();
+    };
 
     private createProductItem(item: ICartData) {
         const productImage = <HTMLImageElement>createElement('img', 'cart__product-image');
         productImage.alt = `Photo ${item.product.title}`;
         productImage.src = item.product.thumbnail;
+
+        const productImageContainer = createElement('div', 'cart__product-image-container');
+        productImageContainer.append(productImage);
 
         const productName = createElement('p', 'cart__product-name');
         productName.textContent = `${item.product.brand} ${item.product.title}`;
@@ -142,7 +49,7 @@ class CartPage extends Component {
         productPrice.textContent = `${item.product.price} $`;
 
         const productContainer = createElement('div', 'cart__products-item');
-        productContainer.append(productImage);
+        productContainer.append(productImageContainer);
         productContainer.append(productName);
         productContainer.append(productPrice);
 
@@ -158,12 +65,16 @@ class CartPage extends Component {
             if (countProd > 1) {
                 productCount.textContent = (--countProd).toString();
             }
+            setProductInCartLocalStorage(item.product, false);
+            CartPage.updateTotalPrice();
         });
         btnIncrement.addEventListener('click', () => {
             let countProd: number = Number(productCount.textContent);
             if (countProd < item.product.stock) {
                 productCount.textContent = (++countProd).toString();
             }
+            setProductInCartLocalStorage(item.product, true);
+            CartPage.updateTotalPrice();
         });
         countContainer.append(btnDecrease);
         countContainer.append(productCount);
@@ -175,6 +86,11 @@ class CartPage extends Component {
         btnDel.addEventListener('click', (ev: Event) => {
             (<HTMLElement>ev.target).parentElement?.remove();
             console.log('delete product item');
+            const data = getDataInLocalStorage();
+            if (data !== null) {
+                delProductInCartLocalStorage(item.product.id);
+                CartPage.updateTotalPrice();
+            }
         });
         productContainer.append(btnDel);
 
@@ -183,10 +99,13 @@ class CartPage extends Component {
 
     private renderShop() {
         const productsListColumn = createElement('div', 'cart__products-list-container');
-        this.productsInCartArr.forEach((item) => {
-            const productItem = this.createProductItem(item);
-            productsListColumn.append(productItem);
-        });
+        const data = getDataInLocalStorage();
+        if (data !== null) {
+            data.forEach((item) => {
+                const productItem = this.createProductItem(item);
+                productsListColumn.append(productItem);
+            });
+        }
         this.container.append(productsListColumn);
     }
 
@@ -203,8 +122,8 @@ class CartPage extends Component {
         orderPromo.append(inputPromo);
         orderPromo.append(btnPromo);
 
-        const totalBlock = createElement('div', 'order__total');
-        totalBlock.textContent = `Total: ${this.getTotalPrice()}`;
+        const totalBlock = createElement('p', 'order__total-title');
+        totalBlock.innerHTML = `Total: <span class="order__total">${CartPage.totalCountProduct()}</span> $`;
 
         const btnBuy = createElement('button', 'order__buy-btn');
         btnBuy.textContent = 'Buy now';

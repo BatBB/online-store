@@ -1,7 +1,6 @@
 import createElement from '../../libs/createElement';
+import { setProductInCartLocalStorage } from '../../libs/productInCartLocalStorage';
 import Component from '../Component';
-import Header from '../Header/Header';
-import ICartData from '../interfaces/ICartData';
 import IProduct from '../interfaces/IProduct';
 import './product.scss';
 
@@ -31,32 +30,7 @@ class Product extends Component {
         btnAdd.textContent = 'Add to cart';
         btnAdd.addEventListener('click', () => {
             console.log('Add to cart');
-
-            const productsInCart = localStorage.getItem('productsInCart');
-            if (productsInCart !== null) {
-                const products: ICartData[] = <ICartData[]>JSON.parse(productsInCart);
-
-                const indexProd = products.findIndex((prod) => prod.product.id === productData.id);
-                if (indexProd === -1) {
-                    products.push({
-                        product: productData,
-                        count: 1,
-                    });
-                } else {
-                    if (products[indexProd].count < productData.stock) products[indexProd].count++;
-                }
-                localStorage.setItem('productsInCart', JSON.stringify(products));
-            } else {
-                console.log('create array with product and count');
-                const prod: ICartData[] = [
-                    {
-                        product: productData,
-                        count: 1,
-                    },
-                ];
-                localStorage.setItem('productsInCart', JSON.stringify(prod));
-            }
-            Header.updateCountProduct();
+            setProductInCartLocalStorage(productData, true);
         });
 
         const btnBuy = createElement('button', 'product-btn-add');

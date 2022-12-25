@@ -62,6 +62,7 @@ class App {
         this.route.eventDOMContentLoaded();
         this.route.eventHashChange();
         Header.updateCountProduct();
+        CartPage.updateTotalPrice();
     }
 }
 

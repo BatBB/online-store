@@ -57,11 +57,9 @@ class Header extends Component {
         <span class="header__link-count">000</span>`;
         cartLink.addEventListener('click', (event: Event) => {
             event.preventDefault();
-            console.log(window.location.hash);
             window.location.hash = '/cart';
             void route.router('/cart');
         });
-        console.log(document);
 
         this.container.append(logoLink);
         this.container.append(cartLink);

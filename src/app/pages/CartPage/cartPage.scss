@@ -19,7 +19,21 @@
 
     &__product {
         &-image {
+            &-container {
+                width: 200px;
+                height: 100px;
+                text-align: center;
+            }
+
             height: 100%;
+        }
+
+        &-name {
+            width: 250px;
+        }
+
+        &-price {
+            width: 45px;
         }
 
         &-count-container {
@@ -36,7 +50,7 @@
 
 
     &__title,
-    &__total {
+    &__total-title {
         font-size: 1.5em;
         font-weight: bold;
     }
