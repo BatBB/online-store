@@ -13,6 +13,8 @@ class CartPage extends Component {
         super(tagName, className);
     }
 
+    private textEmptyCart = `<p class="cart__empty-text">Cart is empty!</p>`;
+
     private static totalCountProduct = () => {
         let total = 0;
         const data = getDataInLocalStorage();
@@ -90,6 +92,10 @@ class CartPage extends Component {
             if (data !== null) {
                 delProductInCartLocalStorage(item.product.id);
                 CartPage.updateTotalPrice();
+                if (data.length === 1) {
+                    const cartProductColumn = document.querySelector('.cart__products-list-container');
+                    if (cartProductColumn) cartProductColumn.innerHTML = this.textEmptyCart;
+                }
             }
         });
         productContainer.append(btnDel);
@@ -100,11 +106,14 @@ class CartPage extends Component {
     private renderShop() {
         const productsListColumn = createElement('div', 'cart__products-list-container');
         const data = getDataInLocalStorage();
-        if (data !== null) {
+
+        if (data !== null && data.length) {
             data.forEach((item) => {
                 const productItem = this.createProductItem(item);
                 productsListColumn.append(productItem);
             });
+        } else {
+            productsListColumn.innerHTML = this.textEmptyCart;
         }
         this.container.append(productsListColumn);
     }
