@@ -5,6 +5,7 @@ import './MainPage.scss';
 
 class MainPage extends Component {
     private productsList = new ProductsList('div', 'products-list');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     private aside = new Aside('aside', 'aside');
     constructor(tagName: string, className: string) {
         super(tagName, className);
