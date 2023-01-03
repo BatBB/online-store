@@ -1,0 +1,33 @@
+.pay {
+
+    max-height: 400px;
+    max-width: 500px;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: burlywood;
+    border-radius: 5%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    &-form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+
+        & input {
+            height: 30px;
+        }
+
+        &__creditcard-data {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+        }
+    }
+
+
+}
