@@ -113,6 +113,7 @@ class App {
                 history.pushState({}, '', userQuery.userParams?.search);
             }
             MainPage.productsList.render();
+            // console.log(userQuery.userParams?.search)
         });
     }
 

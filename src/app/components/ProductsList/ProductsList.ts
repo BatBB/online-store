@@ -14,26 +14,25 @@ class ProductsList extends Component {
     async renderProducts() {
         let products = await Loader.fetchData();
         const urlParams = new URL(location ? location.href : window.location.href);
-        console.log(userQuery.userParams?.search);
         if (urlParams.searchParams.get('category') && urlParams.searchParams.get('brand')) {
             products = products?.filter((item) => {
                 return (
-                    String(urlParams.searchParams.getAll('category')).includes(item.category) &&
-                    String(urlParams.searchParams.getAll('brand')).includes(item.brand)
+                    urlParams.searchParams.getAll('category').includes(item.category) &&
+                    urlParams.searchParams.getAll('brand').includes(item.brand)
                 );
             });
         } else if (
             urlParams.searchParams.getAll('category')!.length > 0 &&
             urlParams.searchParams.getAll('brand').length === 0
         ) {
-            products = products?.filter((item) =>
-                String(urlParams.searchParams.getAll('category')).includes(item.category)
-            );
+            products = products?.filter((item) => {
+                return urlParams.searchParams.getAll('category').includes(item.category);
+            });
         } else if (
             urlParams.searchParams.getAll('brand').length > 0 &&
             urlParams.searchParams.getAll('category').length === 0
         ) {
-            products = products?.filter((item) => String(urlParams.searchParams.getAll('brand')).includes(item.brand));
+            products = products?.filter((item) => urlParams.searchParams.getAll('brand').includes(item.brand));
         } else {
             products = await Loader.fetchData();
         }
