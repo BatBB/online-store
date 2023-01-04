@@ -45,7 +45,6 @@ class Filter extends Component {
             }
             this.renderRangeFilter();
             this.rangeFilterLogic();
-            console.log('После');
         } catch (err) {
             console.log(err);
         }
@@ -87,42 +86,46 @@ class Filter extends Component {
         const lowerPrice = document.querySelector('.lower-price');
         const upperPriceSlider = document.querySelector('#upper-price') as HTMLInputElement;
         const upperPrice = document.querySelector('.upper-price');
-
-        lowerPrice!.innerHTML = lowerPriceSlider.value + ' €';
-        upperPrice!.innerHTML = upperPriceSlider.value + ' €';
-        let lowerVal = parseInt(lowerPriceSlider.value);
-        let upperVal = parseInt(upperPriceSlider.value);
-
-        upperPriceSlider.oninput = function () {
+        let lowerVal;
+        let upperVal;
+        if (lowerPrice) lowerPrice.innerHTML = lowerPriceSlider.value + ' €';
+        if (upperPrice) upperPrice.innerHTML = upperPriceSlider.value + ' €';
+        if (lowerPriceSlider) {
             lowerVal = parseInt(lowerPriceSlider.value);
-            upperVal = parseInt(upperPriceSlider.value);
-            upperPrice!.innerHTML = String(upperVal) + ' €';
+            lowerPriceSlider.oninput = function () {
+                lowerVal = parseInt(lowerPriceSlider.value);
+                upperVal = parseInt(upperPriceSlider.value);
+                lowerPrice!.innerHTML = String(lowerVal) + ' €';
 
-            if (upperVal < lowerVal + 4) {
-                lowerPriceSlider.value = String(upperVal - 4);
-                lowerPrice!.innerHTML = String(upperVal) + '€';
+                if (lowerVal > upperVal - 4) {
+                    upperPriceSlider.value = String(lowerVal + 4);
+                    upperPrice!.innerHTML = String(upperVal) + ' €';
 
-                if (String(lowerVal) == lowerPriceSlider.min) {
-                    upperPriceSlider.value = String(4);
-                    lowerPrice!.innerHTML = String(upperVal) + ' €';
+                    if (String(upperVal) == upperPriceSlider.max) {
+                        lowerPriceSlider.value = String(parseInt(upperPriceSlider.max) - 4);
+                        upperPrice!.innerHTML = String(upperVal) + ' €';
+                    }
                 }
-            }
-        };
-        lowerPriceSlider.oninput = function () {
-            lowerVal = parseInt(lowerPriceSlider.value);
+            };
+        }
+        if (upperPriceSlider) {
             upperVal = parseInt(upperPriceSlider.value);
-            lowerPrice!.innerHTML = String(lowerVal) + ' €';
-
-            if (lowerVal > upperVal - 4) {
-                upperPriceSlider.value = String(lowerVal + 4);
+            upperPriceSlider.oninput = function () {
+                lowerVal = parseInt(lowerPriceSlider.value);
+                upperVal = parseInt(upperPriceSlider.value);
                 upperPrice!.innerHTML = String(upperVal) + ' €';
 
-                if (String(upperVal) == upperPriceSlider.max) {
-                    lowerPriceSlider.value = String(parseInt(upperPriceSlider.max) - 4);
-                    upperPrice!.innerHTML = String(upperVal) + ' €';
+                if (upperVal < lowerVal + 4) {
+                    lowerPriceSlider.value = String(upperVal - 4);
+                    lowerPrice!.innerHTML = String(upperVal) + '€';
+
+                    if (String(lowerVal) == lowerPriceSlider.min) {
+                        upperPriceSlider.value = String(4);
+                        lowerPrice!.innerHTML = String(upperVal) + ' €';
+                    }
                 }
-            }
-        };
+            };
+        }
 
         // Stock
         const lowerStockSlider = document.querySelector('#lower-stock') as HTMLInputElement;
@@ -130,41 +133,46 @@ class Filter extends Component {
         const upperStockSlider = document.querySelector('#upper-stock') as HTMLInputElement;
         const upperStock = document.querySelector('.upper-stock');
 
-        lowerStock!.innerHTML = lowerStockSlider.value;
-        upperStock!.innerHTML = upperStockSlider.value;
-        let lowerValStock = parseInt(lowerStockSlider.value);
-        let upperValStock = parseInt(upperStockSlider.value);
+        if (lowerStock) lowerStock.innerHTML = lowerStockSlider.value;
+        if (upperStock) upperStock.innerHTML = upperStockSlider.value;
 
-        upperStockSlider.oninput = function () {
-            lowerValStock = parseInt(lowerStockSlider.value);
-            upperValStock = parseInt(upperStockSlider.value);
-            upperStock!.innerHTML = String(upperValStock);
+        let lowerValStock;
+        let upperValStock;
+        if (lowerValStock && upperValStock) {
+            let lowerValStock = parseInt(lowerStockSlider.value);
+            let upperValStock = parseInt(upperStockSlider.value);
 
-            if (upperValStock < lowerValStock + 4) {
-                lowerStockSlider.value = String(upperValStock - 4);
-                lowerStock!.innerHTML = String(upperValStock);
-
-                if (String(lowerValStock) == lowerStockSlider.min) {
-                    upperStockSlider.value = String(4);
-                    lowerStock!.innerHTML = String(upperValStock);
-                }
-            }
-        };
-        lowerStockSlider.oninput = function () {
-            lowerValStock = parseInt(lowerStockSlider.value);
-            upperValStock = parseInt(upperStockSlider.value);
-            lowerStock!.innerHTML = String(lowerValStock);
-
-            if (lowerValStock > upperValStock - 4) {
-                upperStockSlider.value = String(lowerValStock + 4);
+            upperStockSlider.oninput = function () {
+                lowerValStock = parseInt(lowerStockSlider.value);
+                upperValStock = parseInt(upperStockSlider.value);
                 upperStock!.innerHTML = String(upperValStock);
 
-                if (String(upperValStock) == upperStockSlider.max) {
-                    lowerStockSlider.value = String(parseInt(upperStockSlider.max) - 4);
-                    upperStock!.innerHTML = String(upperValStock);
+                if (upperValStock < lowerValStock + 4) {
+                    lowerStockSlider.value = String(upperValStock - 4);
+                    lowerStock!.innerHTML = String(upperValStock);
+
+                    if (String(lowerValStock) == lowerStockSlider.min) {
+                        upperStockSlider.value = String(4);
+                        lowerStock!.innerHTML = String(upperValStock);
+                    }
                 }
-            }
-        };
+            };
+            lowerStockSlider.oninput = function () {
+                lowerValStock = parseInt(lowerStockSlider.value);
+                upperValStock = parseInt(upperStockSlider.value);
+                lowerStock!.innerHTML = String(lowerValStock);
+
+                if (lowerValStock > upperValStock - 4) {
+                    upperStockSlider.value = String(lowerValStock + 4);
+                    upperStock!.innerHTML = String(upperValStock);
+
+                    if (String(upperValStock) == upperStockSlider.max) {
+                        lowerStockSlider.value = String(parseInt(upperStockSlider.max) - 4);
+                        upperStock!.innerHTML = String(upperValStock);
+                    }
+                }
+            };
+        }
     }
 
     // render() {
