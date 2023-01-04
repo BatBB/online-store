@@ -1,17 +1,19 @@
 import Header from './components/Header/Header';
 import '../global.scss';
 import Footer from './components/Footer/Footer';
-import MainPage from './pages/MainPage/MainPage';
 import Route from './routes/routes';
 import ProductPage from './pages/ProductPage/ProductPage';
 import CartPage from './pages/CartPage/CartPage';
 import createElement from './libs/createElement';
+import MainPage from './pages/MainPage/MainPage';
+import userQuery from './libs/userQuery';
 
 class App {
     private container: HTMLElement;
     private headerPage = new Header('header', 'header');
     private footerPage = new Footer('footer', 'footer');
     private route = new Route();
+    static mainPage = new MainPage('div', 'main-page');
 
     static renderCurrentPage = (page: string) => {
         const mainBlock = document.getElementById('main');
@@ -49,6 +51,71 @@ class App {
         return mainElement;
     };
 
+    private globalHandler() {
+        window.document.addEventListener('change', (e) => {
+            const target = e.target as HTMLInputElement;
+            if (target.id === 'lower-price') {
+                userQuery.price.min = +target.value;
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                userQuery.userParams?.searchParams.set('price', `${userQuery.price.min}|${userQuery.price.max}`);
+            }
+            if (target.id === 'upper-price') {
+                userQuery.price.max = +target.value;
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                userQuery.userParams?.searchParams.set('price', `${userQuery.price.min}|${userQuery.price.max}`);
+            }
+
+            if (target.id === 'lower-stock') {
+                userQuery.stock.min = +target.value;
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                userQuery.userParams?.searchParams.set('stock', `${userQuery.stock.min}|${userQuery.stock.max}`);
+            }
+            if (target.id === 'upper-stock') {
+                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                userQuery.userParams?.searchParams.set('stock', `${userQuery.stock.min}|${userQuery.stock.max}`);
+                userQuery.stock.max = +target.value;
+            }
+            //
+
+            if (target.checked && target.parentElement?.parentElement!.className === 'filter-list__inner--Category') {
+                userQuery.category.push(target.id);
+                userQuery.userParams?.searchParams.set('category', userQuery.category.join('|'));
+                // if (!userQuery.userParams?.searchParams.get('category')) console.log(true);
+            } else if (
+                !target.checked &&
+                target.parentElement?.parentElement!.className === 'filter-list__inner--Category'
+            ) {
+                userQuery.category = userQuery.category.filter((category) => category !== target.id);
+                userQuery.userParams?.searchParams.set('category', userQuery.category.join('|'));
+                if (userQuery.userParams?.searchParams.get('category') === '') {
+                    userQuery.userParams?.searchParams.delete('category');
+                }
+            } else if (
+                target.checked &&
+                target.parentElement?.parentElement!.className === 'filter-list__inner--Brand'
+            ) {
+                userQuery.brand.push(target.id);
+                userQuery.userParams?.searchParams.set('brand', userQuery.brand.join('|'));
+            } else if (
+                !target.checked &&
+                target.parentElement?.parentElement!.className === 'filter-list__inner--Brand'
+            ) {
+                userQuery.brand = userQuery.brand.filter((brand) => brand !== target.id);
+                userQuery.userParams?.searchParams.set('brand', userQuery.brand.join('|'));
+                if (userQuery.userParams?.searchParams.get('brand') === '') {
+                    userQuery.userParams?.searchParams.delete('brand');
+                }
+            }
+
+            if (userQuery.userParams?.search.toString() == '') {
+                history.pushState({}, '', '/');
+            } else {
+                history.pushState({}, '', userQuery.userParams?.search);
+            }
+            MainPage.productsList.render();
+        });
+    }
+
     constructor() {
         this.container = document.body;
     }
@@ -58,11 +125,11 @@ class App {
         this.container.append(this.createMainBlock());
         this.container.append(this.footerPage.render());
         App.renderCurrentPage('main-page');
-
         this.route.eventDOMContentLoaded();
         this.route.eventHashChange();
         Header.updateCountProduct();
         CartPage.updateTotalPrice();
+        this.globalHandler();
     }
 }
 
