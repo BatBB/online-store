@@ -1,5 +1,5 @@
 import Component from '../Component';
-import './modalOrdering.scss';
+import './modalPay.scss';
 
 class ModalOrdering extends Component {
     constructor(tagName: string, className: string) {
@@ -7,6 +7,21 @@ class ModalOrdering extends Component {
     }
 
     private isNumber = (key: string) => /\d/.test(key); //проверка ввода на цифры
+
+    closeModalPay() {
+        const modalPay = document.querySelector('.pay');
+
+        if (modalPay) {
+            modalPay.addEventListener('click', (ev: Event) => {
+                const target = <HTMLElement>ev.target;
+                if (target) {
+                    if (target.className === 'pay') {
+                        target.classList.add('hidden');
+                    }
+                }
+            });
+        }
+    }
 
     private inputNumber(className: string) {
         const input = <HTMLInputElement>this.container.querySelector(className);
@@ -105,6 +120,7 @@ class ModalOrdering extends Component {
         this.inputNumber('.pay-form-phone');
         this.inputNumber('.pay-form__creditcard-num');
         this.inputNumber('.pay-form__creditcard-cvv');
+        this.closeModalPay();
         return this.container;
     }
 }

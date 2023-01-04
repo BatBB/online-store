@@ -15,6 +15,13 @@ class CartPage extends Component {
 
     private textEmptyCart = `<p class="cart__empty-text">Cart is empty!</p>`;
 
+    private openModalPay() {
+        const modalPay = document.querySelector('.pay');
+        if (modalPay) {
+            modalPay.classList.remove('hidden');
+        }
+    }
+
     private static totalCountProduct = () => {
         let total = 0;
         const data = getDataInLocalStorage();
@@ -137,7 +144,7 @@ class CartPage extends Component {
         const btnBuy = createElement('button', 'order__buy-btn');
         btnBuy.textContent = 'Buy now';
         btnBuy.addEventListener('click', () => {
-            alert('Good');
+            this.openModalPay();
         });
 
         orderBlock.append(orderTitle);
