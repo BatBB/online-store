@@ -13,7 +13,6 @@ class App {
     private headerPage = new Header('header', 'header');
     private footerPage = new Footer('footer', 'footer');
     private route = new Route();
-    static mainPage = new MainPage('div', 'main-page');
 
     static renderCurrentPage = (page: string) => {
         const mainBlock = document.getElementById('main');
@@ -45,14 +44,13 @@ class App {
     };
 
     private createMainBlock = () => {
-        const mainElement = document.createElement('main');
-        mainElement.className = 'main';
+        const mainElement = createElement('main', 'main');
         mainElement.id = 'main';
         return mainElement;
     };
 
     private globalHandler() {
-        window.document.addEventListener('change', (e) => {
+        window.document.addEventListener('change', (e: Event) => {
             const target = e.target as HTMLInputElement;
             if (target.id === 'lower-price') {
                 userQuery.price.min = +target.value;
@@ -125,7 +123,6 @@ class App {
         this.container.append(this.headerPage.render());
         this.container.append(this.createMainBlock());
         this.container.append(this.footerPage.render());
-        App.renderCurrentPage('main-page');
         this.route.eventDOMContentLoaded();
         this.route.eventHashChange();
         Header.updateCountProduct();
