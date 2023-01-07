@@ -14,7 +14,7 @@ class ProductsList extends Component {
     async renderProducts() {
         let products = await Loader.fetchData();
         const urlParams = new URL(location ? location.href : window.location.href);
-        if (urlParams.searchParams.get('category') && urlParams.searchParams.get('brand')) {
+        if (urlParams.searchParams.has('category') && urlParams.searchParams.has('brand')) {
             products = products?.filter((item) => {
                 return (
                     urlParams.searchParams.getAll('category').includes(item.category) &&
@@ -39,6 +39,7 @@ class ProductsList extends Component {
 
         products = products?.filter((item) => item.stock >= userQuery.stock.min! && item.stock <= userQuery.stock.max!);
         products = products?.filter((item) => item.price >= userQuery.price.min! && item.price <= userQuery.price.max!);
+        products = products?.filter((item) => item.title.toLowerCase().includes(userQuery.search));
 
         if (products) {
             this.container.innerHTML = '';

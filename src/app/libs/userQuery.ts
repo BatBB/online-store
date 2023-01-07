@@ -10,6 +10,7 @@ type UserQueryType = {
         min: number | null;
         max: number | null;
     };
+    search: string;
 };
 
 const userQuery: UserQueryType = {
@@ -24,6 +25,7 @@ const userQuery: UserQueryType = {
         min: 10,
         max: 150,
     },
+    search: '',
 };
 
 export default userQuery;

@@ -113,6 +113,26 @@ class App {
             MainPage.productsList.render();
             // console.log(userQuery.userParams?.search)
         });
+        window.document.addEventListener('input', (e: Event) => {
+            const target = e.target as HTMLInputElement;
+
+            if (target) {
+                if (target.id === 'search-input') {
+                    userQuery.search = target.value;
+                    userQuery.userParams?.searchParams.set('search', `${userQuery.search}`);
+                    if (userQuery.userParams?.searchParams.get('search') === '') {
+                        userQuery.userParams.searchParams.delete('search');
+                    }
+                }
+            }
+
+            if (userQuery.userParams?.search.toString() == '') {
+                history.pushState({}, '', '/');
+            } else {
+                history.pushState({}, '', userQuery.userParams?.search);
+            }
+            MainPage.productsList.render();
+        });
     }
 
     constructor() {

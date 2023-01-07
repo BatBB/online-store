@@ -10,6 +10,7 @@ class Filter extends Component {
     }
 
     async renderFilter() {
+        this.renderSearchBlock();
         try {
             const data = await Loader.fetchData();
             const allCategory = new Set(data?.map((item) => item.category));
@@ -78,6 +79,16 @@ class Filter extends Component {
         `;
 
         this.container.append(rangeContainer);
+    }
+
+    renderSearchBlock() {
+        const searchContainer: HTMLDivElement = document.createElement('div');
+        searchContainer.className = 'search-container';
+        const searchInput: HTMLInputElement = document.createElement('input');
+        searchInput.id = 'search-input';
+        searchInput.placeholder = 'Search products';
+        searchContainer.append(searchInput);
+        this.container.append(searchContainer);
     }
 
     rangeFilterLogic() {
