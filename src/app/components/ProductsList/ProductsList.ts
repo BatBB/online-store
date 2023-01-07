@@ -3,12 +3,30 @@ import Component from '../Component';
 import Product from '../Product/Product';
 import IProduct from './../interfaces/IProduct';
 import userQuery from '../../libs/userQuery';
-
 import './productsList.scss';
+import createElement from '../../libs/createElement';
 
 class ProductsList extends Component {
     constructor(tagName: string, className: string) {
         super(tagName, className);
+    }
+
+    private renderPaginationNumber(countPages: number, currentPaginationPage: number) {
+        const paginationPageNumbersContainer = document.querySelector('.main__pagination-numbers');
+        if (paginationPageNumbersContainer) {
+            paginationPageNumbersContainer.innerHTML = '';
+            const paginationPageNumberList = createElement('ul', 'main__pagination-numbers-list');
+
+            for (let i = 1; i <= countPages; i++) {
+                const paginationPageNumberItem = createElement('li', 'main__pagination-numbers-item');
+                if (i === currentPaginationPage) {
+                    paginationPageNumberItem.classList.add('checked');
+                }
+                paginationPageNumberItem.textContent = i.toString();
+                paginationPageNumberList.append(paginationPageNumberItem);
+            }
+            paginationPageNumbersContainer.append(paginationPageNumberList);
+        }
     }
 
     async renderProducts() {
@@ -40,14 +58,41 @@ class ProductsList extends Component {
         products = products?.filter((item) => item.stock >= userQuery.stock.min! && item.stock <= userQuery.stock.max!);
         products = products?.filter((item) => item.price >= userQuery.price.min! && item.price <= userQuery.price.max!);
 
-        if (products) {
-            this.container.innerHTML = '';
-            products.forEach((product: IProduct) => {
-                const productItem = new Product('div', 'product-item');
-                productItem.renderProduct(product);
-                this.container.append(productItem.render());
-            });
+        let currentPage: number = urlParams.searchParams.get('page') ? Number(urlParams.searchParams.get('page')) : 1;
+        const countProductsOnPage: number = urlParams.searchParams.get('count')
+            ? Number(urlParams.searchParams.get('count'))
+            : 10;
+
+        if (currentPage > Math.ceil((products?.length || 1) / countProductsOnPage)) {
+            currentPage = Math.ceil((products?.length || 1) / countProductsOnPage);
         }
+
+        const productsListContainer = createElement('div', 'main__products-list');
+        productsListContainer.innerHTML = '';
+
+        if (products) {
+            const countPages = Math.ceil(products.length / countProductsOnPage);
+            const startProduct = (currentPage - 1) * countProductsOnPage;
+            const endProduct =
+                startProduct + countProductsOnPage < products.length
+                    ? startProduct + countProductsOnPage
+                    : products.length;
+
+            // render pagination numbers container
+            this.renderPaginationNumber(countPages, currentPage);
+
+            this.container.innerHTML = '';
+            products.forEach((product: IProduct, index: number) => {
+                const productItem = new Product('div', 'product-item');
+                if (index >= startProduct && index < endProduct) {
+                    productItem.renderProduct(product);
+                    productsListContainer.append(productItem.render());
+                }
+                // this.container.append(productItem.render());
+            });
+            // renderCurrentPage(currentPage);
+        }
+        this.container.append(productsListContainer);
     }
 
     render() {

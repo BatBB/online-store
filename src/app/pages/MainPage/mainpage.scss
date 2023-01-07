@@ -86,7 +86,8 @@
                 cursor: pointer;
 
                 &.checked {
-                    background-color: grey;
+                    color: white;
+                    background-color: black;
                 }
             }
         }

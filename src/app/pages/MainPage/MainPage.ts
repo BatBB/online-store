@@ -1,86 +1,61 @@
 import Component from '../../components/Component';
 import ProductsList from '../../components/ProductsList/ProductsList';
 import Aside from '../../components/Aside/Aside';
-import './mainpage.scss';
+import ViewAndSort from '../../components/viewAndSort/ViewAndSort';
 import createElement from '../../libs/createElement';
-import svgImages from '../../libs/svgImages';
-// import handlerAside from '../../components/Aside/handlerAside';
+import userQuery from '../../libs/userQuery';
+import './mainpage.scss';
+
 class MainPage extends Component {
-    static productsList = new ProductsList('div', 'main__products-list');
+    static productsList = new ProductsList('div', 'main__products-list-container');
     private Aside = new Aside('aside', 'main__aside');
+    private ViewAndSortComponent = new ViewAndSort('div', 'main__view-sort-container');
+    private mainContainer = createElement('div', 'main__container');
 
     constructor(tagName: string, className: string) {
         super(tagName, className);
     }
 
-    private renderViewAndSort() {
-        const viewAndCountContainer = createElement('div', 'main__view-sort-container');
+    setURLPagination(param: 'page' | 'count', value: string) {
+        userQuery[param] = value;
+        userQuery.userParams?.searchParams.set(param, value);
+        if (userQuery.userParams?.search.toString() === '') {
+            history.pushState({}, '', '/');
+        } else {
+            history.pushState({}, '', userQuery.userParams?.search);
+        }
+    }
 
-        const viewContainerTemplate = `
-        <div class="main__sort">
-            <span class="main__sort-title">Sort: </span>
-            <select class="main__sort-list" name="sort-select">
-                <option class="main__sort-item" value="sort-recommended" selected>Recommended</option>
-                <option class="main__sort-item" value="sort-price-low">Price: low to high</option>
-                <option class="main__sort-item" value="sort-price-high">Price: high to low</option>
-                <option class="main__sort-item" value="sort-rate-low">Rate: low to high</option>
-                <option class="main__sort-item" value="sort-rate-high">Rate: high to low</option>
-            </select>
-        </div>
-        <div class="main__view">
-            <div class="main__view-count">
-                <ul class="main__view-count-list">
-                    <li class="main__view-count-item checked">10</li>
-                    <li class="main__view-count-item">50</li>
-                    <li class="main__view-count-item">100</li>
-                </ul>
-            </div>
-            <div class="main__view-container">
-                <ul class="main__view-list">
-                    <li class="main__view-item">${svgImages.list}</li>
-                    <li class="main__view-item checked">${svgImages.card}</li>
-                </ul>
-            </div>
-        </div>`;
-
-        viewAndCountContainer.innerHTML = viewContainerTemplate;
-
-        const countView = viewAndCountContainer.querySelector('.main__view-count-list');
-
-        countView?.addEventListener('click', (ev: Event) => {
+    clickMainContainer() {
+        this.container.addEventListener('click', (ev: Event) => {
             const target = <HTMLElement>ev.target;
+
             if (target.classList.contains('main__view-count-item')) {
-                const countItem = viewAndCountContainer.querySelectorAll('.main__view-count-item');
+                const countItem = this.container.querySelectorAll('.main__view-count-item');
                 countItem.forEach((item) => item.classList.remove('checked'));
                 target.classList.add('checked');
+                this.setURLPagination('count', target.textContent || '10');
+                MainPage.productsList.render();
+            } else if (target.classList.contains('main__pagination-numbers-item')) {
+                const paginationPageNumberItems = this.container.querySelectorAll('.main__pagination-numbers-item');
+
+                paginationPageNumberItems.forEach((item) => item.classList.remove('checked'));
+                target.classList.add('checked');
+                this.setURLPagination('page', target.textContent || '1');
+                MainPage.productsList.render();
             }
         });
-        return viewAndCountContainer;
     }
 
-    private renderPaginationPageNumbers(countPages: number) {
-        const paginationPageNumber = createElement('div', 'main__pagination-numbers');
-        const paginationPageNumberList = createElement('ul', 'main__pagination-numbers-list');
-        for (let i = 1; i <= countPages; i++) {
-            const paginationPageNumberItem = createElement('li', 'main__pagination-numbers-item');
-            paginationPageNumberItem.textContent = i.toString();
-            paginationPageNumberList.append(paginationPageNumberItem);
-        }
-        paginationPageNumber.append(paginationPageNumberList);
-        return paginationPageNumber;
-    }
-
-    private renderMain() {
-        const mainContainer = createElement('div', 'main__container');
-        mainContainer.append(this.renderViewAndSort());
-        mainContainer.append(MainPage.productsList.render());
-        mainContainer.append(this.renderPaginationPageNumbers(10));
-        return mainContainer;
-    }
+    renderMain() {}
 
     render() {
         this.container.append(this.Aside.render());
-        this.container.append(this.renderMain());
+        this.mainContainer.append(this.ViewAndSortComponent.render());
+        this.mainContainer.append(MainPage.productsList.render());
+        this.mainContainer.append(createElement('div', 'main__pagination-numbers'));
+        this.container.append(this.mainContainer);
+        this.clickMainContainer();
         return this.container;
     }
 }

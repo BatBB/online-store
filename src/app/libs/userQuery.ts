@@ -10,6 +10,8 @@ type UserQueryType = {
         min: number | null;
         max: number | null;
     };
+    page: string | null;
+    count: string | null;
 };
 
 const userQuery: UserQueryType = {
@@ -24,6 +26,8 @@ const userQuery: UserQueryType = {
         min: 10,
         max: 150,
     },
+    page: null,
+    count: null,
 };
 
 export default userQuery;
