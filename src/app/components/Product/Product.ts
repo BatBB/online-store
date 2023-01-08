@@ -29,14 +29,14 @@ class Product extends Component {
         const btnAdd = createElement('button', 'product-btn-add');
         btnAdd.textContent = 'Add to cart';
         btnAdd.addEventListener('click', () => {
-            console.log('Add to cart');
-            setProductInCartLocalStorage(productData, true);
+            setProductInCartLocalStorage(productData, 1);
         });
 
         const btnBuy = createElement('button', 'product-btn-add');
         btnBuy.textContent = 'Buy now';
         btnBuy.addEventListener('click', () => {
-            console.log('Buy now');
+            setProductInCartLocalStorage(productData, 1);
+            window.location.hash = '/cart';
         });
 
         const btnContainer = createElement('div', 'product-btn');

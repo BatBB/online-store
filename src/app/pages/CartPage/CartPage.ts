@@ -1,5 +1,6 @@
 import Component from '../../components/Component';
 import ICartData from '../../components/interfaces/ICartData';
+import ModalOrdering from '../../components/ModalOrdering/ModalPay';
 import createElement from '../../libs/createElement';
 import {
     setProductInCartLocalStorage,
@@ -14,13 +15,6 @@ class CartPage extends Component {
     }
 
     private textEmptyCart = `<p class="cart__empty-text">Cart is empty!</p>`;
-
-    private openModalPay() {
-        const modalPay = document.querySelector('.pay');
-        if (modalPay) {
-            modalPay.classList.remove('hidden');
-        }
-    }
 
     private static totalCountProduct = () => {
         let total = 0;
@@ -74,7 +68,7 @@ class CartPage extends Component {
             if (countProd > 1) {
                 productCount.textContent = (--countProd).toString();
             }
-            setProductInCartLocalStorage(item.product, false);
+            setProductInCartLocalStorage(item.product, 0);
             CartPage.updateTotalPrice();
         });
         btnIncrement.addEventListener('click', () => {
@@ -82,7 +76,7 @@ class CartPage extends Component {
             if (countProd < item.product.stock) {
                 productCount.textContent = (++countProd).toString();
             }
-            setProductInCartLocalStorage(item.product, true);
+            setProductInCartLocalStorage(item.product, 1);
             CartPage.updateTotalPrice();
         });
         countContainer.append(btnDecrease);
@@ -94,7 +88,6 @@ class CartPage extends Component {
         btnDel.textContent = 'X';
         btnDel.addEventListener('click', (ev: Event) => {
             (<HTMLElement>ev.target).parentElement?.remove();
-            console.log('delete product item');
             const data = getDataInLocalStorage();
             if (data !== null) {
                 delProductInCartLocalStorage(item.product.id);
@@ -144,7 +137,7 @@ class CartPage extends Component {
         const btnBuy = createElement('button', 'order__buy-btn');
         btnBuy.textContent = 'Buy now';
         btnBuy.addEventListener('click', () => {
-            this.openModalPay();
+            ModalOrdering.openModalPay();
         });
 
         orderBlock.append(orderTitle);

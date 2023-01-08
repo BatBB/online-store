@@ -1,6 +1,7 @@
 import Component from '../../components/Component';
 import IProduct from '../../components/interfaces/IProduct';
 import createElement from '../../libs/createElement';
+import { getDataInLocalStorage, setProductInCartLocalStorage } from '../../libs/productInCartLocalStorage';
 import './productPage.scss';
 
 class ProductPage extends Component {
@@ -75,20 +76,24 @@ class ProductPage extends Component {
         const countContainer = createElement('div', 'product-page__count');
         const btnDecrease = createElement('button', 'product-page__count-btn');
         btnDecrease.textContent = '-';
-        const productCount = createElement('p', 'product-page__count-text');
-        productCount.textContent = '' || '1';
+        const productCount = <HTMLInputElement>createElement('input', 'product-page__count-input');
+        productCount.value = '1';
         const btnIncrement = createElement('button', 'product-page__count-btn');
         btnIncrement.textContent = '+';
         btnDecrease.addEventListener('click', () => {
-            let countProd: number = Number(productCount.textContent);
+            let countProd: number = Number(productCount.value);
             if (countProd > 1) {
-                productCount.textContent = (--countProd).toString();
+                productCount.value = (--countProd).toString();
             }
         });
         btnIncrement.addEventListener('click', () => {
-            let countProd: number = Number(productCount.textContent);
-            if (countProd < productData.stock) {
-                productCount.textContent = (++countProd).toString();
+            let countProd: number = Number(productCount.value);
+            const productsInCart = getDataInLocalStorage();
+            const productInCart = productsInCart?.find((prod) => prod.product.id === productData.id);
+            const count = Number(productInCart?.count) ? Number(productInCart?.count) : 0;
+
+            if (countProd < productData.stock - count) {
+                productCount.value = (++countProd).toString();
             }
         });
 
@@ -96,20 +101,28 @@ class ProductPage extends Component {
         countContainer.append(productCount);
         countContainer.append(btnIncrement);
 
-        const productDesc = createElement('div', 'product-page__desc');
+        const productDesc = createElement('p', 'product-page__desc');
         productDesc.textContent = `${productData.description}`;
 
-        const btnAdd = createElement('button', 'product-page__btn');
+        const btnAdd = createElement('button', 'product-page__btn active');
         btnAdd.textContent = 'Add to cart';
         btnAdd.addEventListener('click', () => {
-            console.log('Add to cart');
-            // setProductInCartLocalStorage(productData, true);
+            const productsInCart = getDataInLocalStorage();
+            const productInCart = productsInCart?.find((prod) => prod.product.id === productData.id);
+            const count = Number(productInCart?.count) || 0;
+            const inputCount = <HTMLInputElement>document.querySelector('.product-page__count-input');
+
+            if (count + Number(inputCount.value) <= productData.stock) {
+                setProductInCartLocalStorage(productData, Number(inputCount.value));
+            }
+            inputCount.value = '1';
         });
 
         const btnBuy = createElement('button', 'product-page__btn');
         btnBuy.textContent = 'Buy now';
         btnBuy.addEventListener('click', () => {
-            console.log('Buy now');
+            setProductInCartLocalStorage(productData, 1);
+            window.location.href = '#/cart';
         });
 
         const btnContainer = createElement('div', 'product-page__buttons');
@@ -121,7 +134,6 @@ class ProductPage extends Component {
         productContainer.append(countContainer);
         productContainer.append(btnContainer);
 
-        // this.container.append(productContainer);
         return productContainer;
     }
 
@@ -144,8 +156,6 @@ class ProductPage extends Component {
                 localStorage.removeItem('productDataInLocalStorage');
                 productDataFromLocalStorage = <IProduct>JSON.parse(dataTemp);
 
-                // this.renderProductImages(productDataFromLocalStorage.images, productDataFromLocalStorage.title);
-                // this.renderProductDesc(productDataFromLocalStorage);
                 this.renderNavigationLinks(productDataFromLocalStorage);
 
                 this.renderProduct(productDataFromLocalStorage);

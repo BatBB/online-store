@@ -42,15 +42,20 @@
         }
     }
 
+    &__desc-container>* {
+        margin-bottom: 10px;
+    }
+
     &__count {
         display: flex;
         column-gap: 5px;
         height: 30px;
         align-items: center;
+        margin-bottom: 30px;
 
-        &-text {
+        &-input {
             border: .5px solid black;
-            width: 30px;
+            width: 50px;
             height: 30px;
             line-height: 30px;
             text-align: center;
