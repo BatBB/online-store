@@ -37,9 +37,14 @@ class ProductsList extends Component {
             products = await Loader.fetchData();
         }
 
+        if (urlParams.searchParams.has('search')) {
+            products = products?.filter((item) =>
+                item.title.toLowerCase().includes(urlParams.searchParams.get('search')!)
+            );
+        }
         products = products?.filter((item) => item.stock >= userQuery.stock.min! && item.stock <= userQuery.stock.max!);
         products = products?.filter((item) => item.price >= userQuery.price.min! && item.price <= userQuery.price.max!);
-        products = products?.filter((item) => item.title.toLowerCase().includes(userQuery.search));
+        // products = products?.filter((item) => item.title.toLowerCase().includes(urlParams.searchParams.get('search')!));
 
         if (products) {
             this.container.innerHTML = '';
