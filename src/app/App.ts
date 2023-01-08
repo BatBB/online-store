@@ -6,11 +6,13 @@ import Route from './routes/routes';
 import ProductPage from './pages/ProductPage/ProductPage';
 import CartPage from './pages/CartPage/CartPage';
 import createElement from './libs/createElement';
+import ModalPay from './components/ModalOrdering/ModalPay';
 
 class App {
     private container: HTMLElement;
     private headerPage = new Header('header', 'header');
     private footerPage = new Footer('footer', 'footer');
+    private modalPay = new ModalPay('div', 'pay hidden');
     private route = new Route();
 
     static renderCurrentPage = (page: string) => {
@@ -58,6 +60,8 @@ class App {
         this.container.append(this.createMainBlock());
         this.container.append(this.footerPage.render());
         App.renderCurrentPage('main-page');
+        this.container.append(this.modalPay.render());
+        this.modalPay.closeModalPay();
 
         this.route.eventDOMContentLoaded();
         this.route.eventHashChange();
