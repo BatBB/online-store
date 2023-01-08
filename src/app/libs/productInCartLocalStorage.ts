@@ -2,7 +2,7 @@ import Header from '../components/Header/Header';
 import ICartData from '../components/interfaces/ICartData';
 import IProduct from '../components/interfaces/IProduct';
 
-export function setProductInCartLocalStorage(productData: IProduct, isDec?: boolean) {
+export function setProductInCartLocalStorage(productData: IProduct, dec = 0) {
     const productsInCart = localStorage.getItem('productsInCart');
     if (productsInCart !== null) {
         const products: ICartData[] = <ICartData[]>JSON.parse(productsInCart);
@@ -11,15 +11,14 @@ export function setProductInCartLocalStorage(productData: IProduct, isDec?: bool
         if (indexProd === -1) {
             products.push({
                 product: productData,
-                count: 1,
+                count: dec || 1,
             });
         } else {
-            if (products[indexProd].count < productData.stock && isDec) products[indexProd].count++;
-            if (products[indexProd].count > 1 && !isDec) products[indexProd].count--;
+            if (products[indexProd].count < productData.stock && dec) products[indexProd].count += dec;
+            if (products[indexProd].count > 1 && !dec) products[indexProd].count -= dec;
         }
         localStorage.setItem('productsInCart', JSON.stringify(products));
     } else {
-        console.log('create array with product and count');
         const prod: ICartData[] = [
             {
                 product: productData,

@@ -12,7 +12,6 @@ class Header extends Component {
 
     static updateCountProduct = () => {
         // товары в корзине и их количество будут храниться в localStorage (ключ productsInCart)
-        // console.log(localStorage.getItem('productsInCart'));
 
         const countProductsHeader = document.querySelector('.header__link-count');
 
@@ -35,7 +34,6 @@ class Header extends Component {
 
         const logoLink = createElement('a', 'header__link');
         logoLink.append(logo);
-        logoLink.addEventListener('click', () => {});
         logoLink.addEventListener('click', (event: Event) => {
             event.preventDefault();
             if (window.location.hash) window.location.hash = '';
@@ -56,8 +54,6 @@ class Header extends Component {
 
         this.container.append(logoLink);
         this.container.append(cartLink);
-
-        // console.log(document.querySelector('.header__link-count'));
     }
 
     render() {

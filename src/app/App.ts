@@ -7,18 +7,20 @@ import CartPage from './pages/CartPage/CartPage';
 import createElement from './libs/createElement';
 import MainPage from './pages/MainPage/MainPage';
 import userQuery from './libs/userQuery';
+import ModalPay from './components/ModalOrdering/ModalPay';
 
 class App {
     private container: HTMLElement;
     private headerPage = new Header('header', 'header');
     private footerPage = new Footer('footer', 'footer');
+    private modalPay = new ModalPay('div', 'pay hidden');
     private route = new Route();
 
     static renderCurrentPage = (page: string) => {
         const mainBlock = document.getElementById('main');
         let currentPage: HTMLElement;
         const mainPage = new MainPage('div', 'main-page');
-        const productPage = new ProductPage('div', 'product-page');
+        const productPage = new ProductPage('div', 'product-page-container');
         const cartPage = new CartPage('div', 'cart-page');
         if (mainBlock) {
             mainBlock.innerHTML = '';
@@ -146,6 +148,11 @@ class App {
         this.container.append(this.headerPage.render());
         this.container.append(this.createMainBlock());
         this.container.append(this.footerPage.render());
+
+        App.renderCurrentPage('main-page');
+        this.container.append(this.modalPay.render());
+        this.modalPay.closeModalPay();
+
         this.route.eventDOMContentLoaded();
         this.route.eventHashChange();
         Header.updateCountProduct();
