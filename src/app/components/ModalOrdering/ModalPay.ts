@@ -6,6 +6,13 @@ class ModalOrdering extends Component {
         super(tagName, className);
     }
 
+    static openModalPay() {
+        const modalPay = document.querySelector('.pay');
+        if (modalPay) {
+            modalPay.classList.remove('hidden');
+        }
+    }
+
     private isNumber = (key: string) => /\d/.test(key); //проверка ввода на цифры
 
     closeModalPay() {

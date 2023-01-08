@@ -19,7 +19,7 @@ class App {
         const mainBlock = document.getElementById('main');
         let currentPage: HTMLElement;
         const mainPage = new MainPage('div', 'main-page');
-        const productPage = new ProductPage('div', 'product-page');
+        const productPage = new ProductPage('div', 'product-page-container');
         const cartPage = new CartPage('div', 'cart-page');
         if (mainBlock) {
             mainBlock.innerHTML = '';
