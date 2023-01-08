@@ -1,4 +1,5 @@
 interface IProduct {
+    name: any;
     id: number;
     title: string;
     description: string;
