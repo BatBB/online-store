@@ -12,6 +12,7 @@ type UserQueryType = {
     };
     page: string | null;
     count: string | null;
+    sort: 'recommended' | 'price-low' | 'price-high' | 'rate-low' | 'rate-high';
 };
 
 const userQuery: UserQueryType = {
@@ -28,6 +29,7 @@ const userQuery: UserQueryType = {
     },
     page: null,
     count: null,
+    sort: 'recommended',
 };
 
 export default userQuery;

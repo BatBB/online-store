@@ -58,6 +58,26 @@ class ProductsList extends Component {
         products = products?.filter((item) => item.stock >= userQuery.stock.min! && item.stock <= userQuery.stock.max!);
         products = products?.filter((item) => item.price >= userQuery.price.min! && item.price <= userQuery.price.max!);
 
+        if (userQuery.sort) {
+            switch (userQuery.sort) {
+                case 'recommended':
+                    products = products?.sort((productA, productB) => productA.id - productB.id);
+                    break;
+                case 'price-low':
+                    products = products?.sort((productA, productB) => productA.price - productB.price);
+                    break;
+                case 'price-high':
+                    products = products?.sort((productA, productB) => productB.price - productA.price);
+                    break;
+                case 'rate-low':
+                    products = products?.sort((productA, productB) => productA.rating - productB.rating);
+                    break;
+                case 'rate-high':
+                    products = products?.sort((productA, productB) => productB.rating - productB.rating);
+                    break;
+            }
+        }
+
         let currentPage: number = urlParams.searchParams.get('page') ? Number(urlParams.searchParams.get('page')) : 1;
         const countProductsOnPage: number = urlParams.searchParams.get('count')
             ? Number(urlParams.searchParams.get('count'))

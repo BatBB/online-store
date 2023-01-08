@@ -103,6 +103,29 @@ class App {
                 if (userQuery.userParams?.searchParams.get('brand') === '') {
                     userQuery.userParams?.searchParams.delete('brand');
                 }
+            } else if (target.name === 'sort-select') {
+                switch (target.value) {
+                    case 'sort-recommended':
+                        userQuery.sort = 'recommended';
+                        break;
+                    case 'sort-price-low':
+                        userQuery.sort = 'price-low';
+
+                        break;
+                    case 'sort-price-high':
+                        userQuery.sort = 'price-high';
+
+                        break;
+                    case 'sort-rate-low':
+                        userQuery.sort = 'rate-low';
+
+                        break;
+                    case 'sort-rate-high':
+                        userQuery.sort = 'rate-high';
+
+                        break;
+                }
+                userQuery.userParams?.searchParams.set('sort', userQuery.sort);
             }
 
             if (userQuery.userParams?.search.toString() == '') {
