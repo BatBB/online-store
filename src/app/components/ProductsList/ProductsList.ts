@@ -58,22 +58,31 @@ class ProductsList extends Component {
         products = products?.filter((item) => item.stock >= userQuery.stock.min! && item.stock <= userQuery.stock.max!);
         products = products?.filter((item) => item.price >= userQuery.price.min! && item.price <= userQuery.price.max!);
 
-        if (userQuery.sort) {
-            switch (userQuery.sort) {
+        const sortParam = urlParams.searchParams.get('sort') || userQuery.sort;
+        const sortOptions = document.querySelectorAll('.main__sort-item') as unknown as Array<HTMLOptionElement>;
+        console.log();
+
+        if (sortParam) {
+            switch (sortParam) {
                 case 'recommended':
                     products = products?.sort((productA, productB) => productA.id - productB.id);
+                    sortOptions[0].selected = true;
                     break;
                 case 'price-low':
                     products = products?.sort((productA, productB) => productA.price - productB.price);
+                    sortOptions[1].selected = true;
                     break;
                 case 'price-high':
                     products = products?.sort((productA, productB) => productB.price - productA.price);
+                    sortOptions[2].selected = true;
                     break;
                 case 'rate-low':
                     products = products?.sort((productA, productB) => productA.rating - productB.rating);
+                    sortOptions[3].selected = true;
                     break;
                 case 'rate-high':
                     products = products?.sort((productA, productB) => productB.rating - productB.rating);
+                    sortOptions[4].selected = true;
                     break;
             }
         }
