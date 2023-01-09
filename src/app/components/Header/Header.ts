@@ -1,5 +1,6 @@
 import createElement from '../../libs/createElement';
 import svgImages from '../../libs/svgImages';
+import CartPage from '../../pages/CartPage/CartPage';
 import Route from '../../routes/routes';
 import Component from '../Component';
 import ICartData from '../interfaces/ICartData';
@@ -14,16 +15,20 @@ class Header extends Component {
         // товары в корзине и их количество будут храниться в localStorage (ключ productsInCart)
 
         const countProductsHeader = document.querySelector('.header__link-count');
+        const cartTotalHeader = document.querySelector('.header__total-text');
 
         const productsInCart = localStorage.getItem('productsInCart');
 
         let count = 0;
+        let cartTotal = 0;
         if (productsInCart !== null) {
             const products: ICartData[] = <ICartData[]>JSON.parse(productsInCart);
-            count = products.reduce((total: number, prod) => prod.count + total, 0);
+            count = products.reduce((totalCount: number, prod) => prod.count + totalCount, 0);
+            cartTotal = CartPage.totalCountProduct();
         }
 
         if (countProductsHeader) countProductsHeader.textContent = count.toString();
+        if (cartTotalHeader) cartTotalHeader.textContent = cartTotal.toString();
     };
 
     private renderHeader() {
@@ -40,6 +45,11 @@ class Header extends Component {
             void route.router('/');
         });
 
+        const totalCart = createElement('div', 'header__total');
+        totalCart.innerHTML = `Cart total: <span class="header__total-text">${
+            CartPage.totalCountProduct() || 0
+        }</span> $`;
+
         const cartLink = createElement('a', 'header__link header__link-cart');
         cartLink.innerHTML = `
         <div class="header__link-cart-img">
@@ -53,6 +63,7 @@ class Header extends Component {
         });
 
         this.container.append(logoLink);
+        this.container.append(totalCart);
         this.container.append(cartLink);
     }
 
