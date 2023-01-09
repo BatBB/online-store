@@ -16,7 +16,7 @@ class CartPage extends Component {
 
     private textEmptyCart = `<p class="cart__empty-text">Cart is empty!</p>`;
 
-    private static totalCountProduct = () => {
+    static totalCountProduct = () => {
         let total = 0;
         const data = getDataInLocalStorage();
         if (data !== null) {
