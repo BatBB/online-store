@@ -2,7 +2,7 @@ import Loader from '../../loader/Loader';
 import Component from '../Component';
 import Product from '../Product/Product';
 import IProduct from './../interfaces/IProduct';
-import userQuery from '../../libs/userQuery';
+import { userQuery } from '../../libs/userQuery';
 import './productsList.scss';
 import createElement from '../../libs/createElement';
 

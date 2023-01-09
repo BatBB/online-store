@@ -1,23 +1,72 @@
-.cart-page {
-    display: flex;
-}
-
 .cart {
+    &-page {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 20px;
+        column-gap: 40px;
+
+        &-count {
+            &-input {
+                width: 40px;
+                text-align: center;
+            }
+        }
+
+        &-page {
+            &-title {
+                display: inline-block;
+                text-align: center;
+                width: 30px;
+            }
+        }
+    }
+
     &__products {
+        &-container {
+            display: flex;
+            flex-direction: column;
+        }
+
         &-list-container {
             flex: auto;
+            margin-right: 20px;
         }
 
         &-item {
             display: flex;
             align-items: flex-start;
-            height: 100px;
             column-gap: 10px;
-            margin: 15px;
+            padding: 15px;
+            position: relative;
+        }
+    }
+
+    &__btn {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+
+        &-delete {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            border: none;
+            background-color: inherit;
         }
     }
 
     &__product {
+        &-number {
+            display: flex;
+            align-items: center;
+            height: 100px;
+        }
+
         &-image {
             &-container {
                 width: 200px;
@@ -28,17 +77,38 @@
             height: 100%;
         }
 
-        &-name {
-            width: 250px;
+        &-desc {
+            display: flex;
+            column-gap: 20px;
+            padding: 10px 40px 10px 0;
+            max-width: 550px;
+            width: 100%;
+        }
+
+        &-title {
+            flex: 1 340px;
         }
 
         &-price {
-            width: 45px;
+            flex: 1 80px;
         }
 
-        &-count-container {
-            display: flex;
-            column-gap: 5px;
+        &-count {
+            width: 35px;
+
+            &-container {
+                text-align: center;
+            }
+
+            &-block {
+                display: flex;
+                column-gap: 5px;
+                margin-bottom: 10px;
+            }
+        }
+
+        &-stock {
+            font-size: 12px;
         }
     }
 

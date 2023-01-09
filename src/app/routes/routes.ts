@@ -20,7 +20,7 @@ class Route {
                 if (mainId) mainId.innerHTML = '';
                 if (mainId) mainId.innerHTML = 'error 404';
             }
-        } else if (href === '/cart') {
+        } else if (href.includes('/cart')) {
             App.renderCurrentPage('cart-page');
         } else {
             // App.renderCurrentPage('error-page');

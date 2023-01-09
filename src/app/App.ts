@@ -6,13 +6,13 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import CartPage from './pages/CartPage/CartPage';
 import createElement from './libs/createElement';
 import MainPage from './pages/MainPage/MainPage';
-import userQuery from './libs/userQuery';
+import { userQuery } from './libs/userQuery';
 import ModalPay from './components/ModalOrdering/ModalPay';
 
 class App {
     private container: HTMLElement;
     private headerPage = new Header('header', 'header');
-    private footerPage = new Footer('footer', 'footer');
+    private footerPage = new Footer('footer', 'footer container');
     private modalPay = new ModalPay('div', 'pay hidden');
     private route = new Route();
 
@@ -46,7 +46,7 @@ class App {
     };
 
     private createMainBlock = () => {
-        const mainElement = createElement('main', 'main');
+        const mainElement = createElement('main', 'main container');
         mainElement.id = 'main';
         return mainElement;
     };

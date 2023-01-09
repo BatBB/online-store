@@ -1,8 +1,14 @@
 .header {
-    height: 50px;
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
+    width: 100%;
+    border-bottom: .5px solid grey;
+    margin-bottom: 20px;
+
+    .container {
+        height: 50px;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
 
     &__link {
         margin: 0;

@@ -1,4 +1,6 @@
 .main {
+    min-height: calc(100vh - 122px);
+
     &__aside {
         margin-right: 30px;
     }

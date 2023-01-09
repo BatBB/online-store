@@ -10,6 +10,7 @@ const svgImages = {
 </svg>`,
     card: `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#2b2b2b"><path d="M0 0h6v6H0zm7 0h6v6H7zm0 7h6v6H7zM0 7h6v6H0z"/></svg>`,
     list: `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#2b2b2b"><path d="M0 10h3v3H0zm5 0h8v3H5zM0 5h3v3H0zm5 0h8v3H5zM0 0h3v3H0zm5 0h8v3H5z"/></svg>`,
+    close: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.293,18.293,10.586,12,4.293,5.707A1,1,0,0,1,5.707,4.293L12,10.586l6.293-6.293a1,1,0,1,1,1.414,1.414L13.414,12l6.293,6.293a1,1,0,1,1-1.414,1.414L12,13.414,5.707,19.707a1,1,0,0,1-1.414-1.414Z"/></svg>`,
 };
 
 export default svgImages;

@@ -62,13 +62,16 @@ class Header extends Component {
             void route.router('/cart');
         });
 
-        this.container.append(logoLink);
-        this.container.append(totalCart);
-        this.container.append(cartLink);
+        const containerBlock = createElement('div', 'container');
+
+        containerBlock.append(logoLink);
+        containerBlock.append(totalCart);
+        containerBlock.append(cartLink);
+        return containerBlock;
     }
 
     render() {
-        this.renderHeader();
+        this.container.append(this.renderHeader());
         return this.container;
     }
 }
