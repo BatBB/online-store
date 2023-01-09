@@ -15,7 +15,7 @@ export function setProductInCartLocalStorage(productData: IProduct, dec = 0) {
             });
         } else {
             if (products[indexProd].count < productData.stock && dec) products[indexProd].count += dec;
-            if (products[indexProd].count > 1 && !dec) products[indexProd].count -= dec;
+            if (products[indexProd].count > 1 && !dec) products[indexProd].count -= 1;
         }
         localStorage.setItem('productsInCart', JSON.stringify(products));
     } else {
