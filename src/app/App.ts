@@ -6,7 +6,7 @@ import ProductPage from './pages/ProductPage/ProductPage';
 import CartPage from './pages/CartPage/CartPage';
 import createElement from './libs/createElement';
 import MainPage from './pages/MainPage/MainPage';
-import userQuery from './libs/userQuery';
+import { userQuery } from './libs/userQuery';
 import ModalPay from './components/ModalOrdering/ModalPay';
 
 class App {

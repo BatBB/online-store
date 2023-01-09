@@ -15,7 +15,13 @@ type UserQueryType = {
     sort: 'recommended' | 'price-low' | 'price-high' | 'rate-low' | 'rate-high';
 };
 
-const userQuery: UserQueryType = {
+type UserQueryTypeCart = {
+    userParams?: URL;
+    page_cart: string | null;
+    count_cart: string | null;
+};
+
+export const userQuery: UserQueryType = {
     userParams: new URL(window.location.href),
     category: [],
     brand: [],
@@ -32,4 +38,8 @@ const userQuery: UserQueryType = {
     sort: 'recommended',
 };
 
-export default userQuery;
+export const userQueryCart: UserQueryTypeCart = {
+    userParams: new URL(`${window.location.href}/#/cart`),
+    page_cart: null,
+    count_cart: null,
+};

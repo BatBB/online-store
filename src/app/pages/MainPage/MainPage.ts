@@ -3,7 +3,7 @@ import ProductsList from '../../components/ProductsList/ProductsList';
 import Aside from '../../components/Aside/Aside';
 import ViewAndSort from '../../components/viewAndSort/ViewAndSort';
 import createElement from '../../libs/createElement';
-import userQuery from '../../libs/userQuery';
+import { userQuery } from '../../libs/userQuery';
 import './mainpage.scss';
 
 class MainPage extends Component {

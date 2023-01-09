@@ -1,9 +1,37 @@
-.cart-page {
-    display: flex;
-}
-
 .cart {
+    &-page {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 20px;
+        column-gap: 40px;
+
+        &-count {
+            &-input {
+                width: 40px;
+                text-align: center;
+            }
+        }
+
+        &-page {
+            &-title {
+                display: inline-block;
+                text-align: center;
+                width: 30px;
+            }
+        }
+    }
+
     &__products {
+        &-container {
+            display: flex;
+            flex-direction: column;
+        }
+
         &-list-container {
             flex: auto;
             margin-right: 20px;
@@ -21,12 +49,12 @@
     &__btn {
         width: 20px;
         height: 20px;
+        cursor: pointer;
 
         &-delete {
             position: absolute;
             right: 20px;
             top: 20px;
-            cursor: pointer;
             border: none;
             background-color: inherit;
         }

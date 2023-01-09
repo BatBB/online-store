@@ -116,13 +116,40 @@ class CartPage extends Component {
             delProductInCartLocalStorage(item.product.id);
             CartPage.updateTotalPrice();
             if (data.length === 1) {
-                if (productContainer) productContainer.innerHTML = this.textEmptyCart;
+                const cartPage = document.querySelector('.cart-page');
+                if (cartPage) cartPage.innerHTML = this.textEmptyCart;
             }
         }
 
-        if (productContainer) {
+        if (productContainer && getDataInLocalStorage()?.length) {
             productContainer.innerHTML = '';
             this.renderShop();
+        }
+    }
+
+    private clickBtnPage(paginationContainer: HTMLElement) {
+        const buttonsPage = paginationContainer.querySelectorAll('.cart__pagination-page-btn');
+        buttonsPage.forEach((btn) => {
+            btn.addEventListener('click', (ev: Event) => {
+                const target = <HTMLElement>ev.target;
+                const countTitle = paginationContainer.querySelector('.cart__pagination-page-title');
+                const maxPage = 3;
+                if (countTitle) {
+                    const count = Number(countTitle.textContent);
+                    if (target.className.includes('next')) {
+                        if (count < maxPage) countTitle.textContent = `${count + 1}`;
+                    } else {
+                        if (count > 1) countTitle.textContent = `${count - 1}`;
+                    }
+                }
+            });
+        });
+    }
+
+    private changeCount(paginationContainer: HTMLElement) {
+        const countInput = <HTMLInputElement>paginationContainer.querySelector('.cart__pagination-count-input');
+        if (countInput) {
+            countInput.addEventListener('change', () => {});
         }
     }
 
@@ -134,6 +161,24 @@ class CartPage extends Component {
             this.container.append(productsListColumn);
         }
 
+        const paginationContainer = createElement('div', 'cart__pagination');
+        const paginationContainerTemplate = `
+        <div class="cart__pagination-count">
+            <span class="cart__pagination-count-title">Limit: </span>
+            <input class="cart__pagination-count-input" type="number" min="1" value="1"/>
+        </div>
+        <div class="cart__pagination-page">
+            <span class="cart__pagination-page-text">Page: </span>
+            <button class="cart__pagination-page-btn cart__pagination-page-prev cart__btn"><</button>
+            <span class="cart__pagination-page-title">1</span>
+            <button class="cart__pagination-page-btn cart__pagination-page-next cart__btn">></button>
+        </div>`;
+        paginationContainer.innerHTML = paginationContainerTemplate;
+        this.clickBtnPage(paginationContainer);
+        this.changeCount(paginationContainer);
+
+        productsListColumn.append(paginationContainer);
+
         const data = getDataInLocalStorage();
 
         if (data !== null && data.length) {
@@ -141,8 +186,6 @@ class CartPage extends Component {
                 const productItem = this.createProductItem(item);
                 if (productsListColumn) productsListColumn.append(productItem);
             });
-        } else {
-            if (productsListColumn) productsListColumn.innerHTML = this.textEmptyCart;
         }
     }
 
@@ -177,8 +220,12 @@ class CartPage extends Component {
     }
 
     render() {
-        this.renderShop();
-        this.renderOrder();
+        if (getDataInLocalStorage()?.length) {
+            this.renderShop();
+            this.renderOrder();
+        } else {
+            this.container.innerHTML = this.textEmptyCart;
+        }
         return this.container;
     }
 }
